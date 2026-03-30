@@ -1,0 +1,26 @@
+{% load static %}
+<div class="rpn" data-t="color">
+    <div class="rpn-h"><h3>Profnastil rangi</h3></div>
+    <div class="pw">
+        <div class="pg2">
+            <div class="pgl">Tanlang</div>
+            <div class="prod-grid" id="prod-grid">
+
+                {% for color in colors %}
+                <div class="prod-card {% if forloop.first %}on{% endif %}"
+                     data-idx="{{ forloop.counter0 }}"
+                     data-slug="{{ color.slug }}"
+                     onclick="pickProd({{ forloop.counter0 }})">
+                    <img src="{{ color.image.url }}" alt="{{ color.name }}">
+                    <span>{{ color.name }}</span>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Tanlangan rang slugini saqlash uchun yashirin input #}
+<input type="hidden" id="selected-color-slug" name="color_slug"
+       value="{% if colors %}{{ colors.first.slug }}{% endif %}">

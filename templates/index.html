@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{# SPA: barcha sahifalar bir pageda, JS orqali almashadi #}
+{% include 'pages/calc.html' %}
+{% include 'pages/about.html' %}
+{% include 'pages/portfolio.html' %}
+
+{# Natija modali (hisoblash tugmasidan keyin ochiladi) #}
+{% include 'includes/_calc_result_modal.html' %}
+{% endblock %}

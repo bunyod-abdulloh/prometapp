@@ -1,0 +1,132 @@
+/* ═══ VARIABLES ═══ */
+:root {
+    /* Heading color — dark: oq, light: qora */
+    --t0: #ffffff;
+
+    /* Green palette */
+    --g: #22c55e;
+    --g2: #16a34a;
+    --g3: #4ade80;
+    --g4: #86efac;
+    --gbg: rgba(34, 197, 94, .08);
+    --gbg2: rgba(34, 197, 94, .14);
+    --gbrd: rgba(34, 197, 94, .25);
+    --gglow: 0 0 20px rgba(34, 197, 94, .15);
+
+    /* Background */
+    --bg: #080c14;
+    --bg2: #0c1220;
+    --bg3: #111827;
+    --bg4: #1a2332;
+
+    /* Cards */
+    --card: #0f1729;
+    --card2: #162033;
+    --card3: #1c2940;
+
+    /* Borders */
+    --brd: rgba(255, 255, 255, .06);
+    --brd2: rgba(255, 255, 255, .10);
+    --brd3: rgba(255, 255, 255, .16);
+
+    /* Text */
+    --t1: #f1f5f9;
+    --t2: #94a3b8;
+    --t3: #64748b;
+    --t4: #475569;
+
+    /* Accent colors */
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --purple: #a78bfa;
+    --amber: #f59e0b;
+    --cyan: #22d3ee;
+
+    /* Overlays (zoom, toggle buttonlar) */
+    --overlay-bg: rgba(15, 23, 41, .85);
+
+    /* Header */
+    --hdr-bg: rgba(8, 12, 20, .85);
+
+    /* Hero section */
+    --hero-bg: linear-gradient(140deg, #0a1a10 0%, #081210 50%, #060e1a 100%);
+    --hero-glow: rgba(34, 197, 94, .12);
+    --hero-border: rgba(34, 197, 94, .1);
+
+    /* Body decorative gradients */
+    --body-g1: rgba(34, 197, 94, .04);
+    --body-g2: rgba(59, 130, 246, .03);
+
+    /* Card shadow (light modeda ko'rinadi) */
+    --card-shadow: none;
+
+    /* Radius */
+    --r: 10px;
+    --r2: 14px;
+    --r3: 20px;
+    --r4: 28px;
+
+    /* Animation */
+    --e: cubic-bezier(.16, 1, .3, 1);
+
+    /* Safe area */
+    --sat: env(safe-area-inset-top, 0px);
+    --sab: env(safe-area-inset-bottom, 0px);
+
+    /* Fonts */
+    --f: 'Sora', system-ui, sans-serif;
+    --fm: 'JetBrains Mono', monospace;
+}
+
+/* ═══ LIGHT THEME ═══ */
+[data-theme="light"] {
+    --t0: #0f172a;
+
+    /* Green — oq fonda kontrast uchun to'qroq */
+    --g: #16a34a;
+    --g2: #15803d;
+    --g3: #15803d;
+    --g4: #22c55e;
+    --gbg: rgba(34, 197, 94, .06);
+    --gbg2: rgba(34, 197, 94, .10);
+    --gbrd: rgba(34, 197, 94, .22);
+    --gglow: 0 2px 12px rgba(34, 197, 94, .12);
+
+    --bg: #f8fafc;
+    --bg2: #f1f5f9;
+    --bg3: #e2e8f0;
+    --bg4: #cbd5e1;
+
+    --card: #ffffff;
+    --card2: #f8fafc;
+    --card3: #f1f5f9;
+
+    --brd: rgba(0, 0, 0, .07);
+    --brd2: rgba(0, 0, 0, .10);
+    --brd3: rgba(0, 0, 0, .16);
+
+    --t1: #1e293b;
+    --t2: #475569;
+    --t3: #64748b;
+    --t4: #94a3b8;
+
+    --red: #dc2626;
+    --blue: #2563eb;
+    --purple: #7c3aed;
+    --amber: #d97706;
+    --cyan: #0891b2;
+
+    --overlay-bg: rgba(255, 255, 255, .88);
+    --hdr-bg: rgba(255, 255, 255, .82);
+    --hero-bg: linear-gradient(140deg, #ecfdf5 0%, #f0fdf4 50%, #eff6ff 100%);
+    --hero-glow: rgba(34, 197, 94, .06);
+    --hero-border: rgba(34, 197, 94, .15);
+
+    --body-g1: rgba(34, 197, 94, .03);
+    --body-g2: rgba(59, 130, 246, .02);
+
+    --card-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+}
+
+.zb-del { color: #ef4444 }
+.zb-del:hover { background: rgba(239, 68, 68, .15) }

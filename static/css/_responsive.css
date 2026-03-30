@@ -1,0 +1,60 @@
+/* ═══ RESPONSIVE ═══ */
+
+/* Tablet */
+@media (max-width: 1080px) {
+    .calc { grid-template-columns: 1fr; grid-template-rows: auto 1fr }
+    .calc.collapsed { grid-template-columns: 1fr; grid-template-rows: 1fr }
+    .calc.collapsed .cv-col { border-bottom: none }
+    .calc.collapsed .cvw { height: auto; min-height: 0; max-height: none; flex: 1 }
+    .cv-col { border-right: none; border-bottom: 1px solid var(--brd) }
+    .cvw { height: min(42dvh, 400px); min-height: 240px; flex: none }
+    .stats { grid-template-columns: repeat(2, 1fr) }
+    .svc-g, .pt-g { grid-template-columns: 1fr }
+    .cc { grid-template-columns: 1fr; text-align: center }
+    .cc-b { justify-content: center }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+    .calc { display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden }
+    .calc.collapsed { display: flex; flex-direction: column; flex: 1 }
+    .calc.collapsed .cv-col { flex: 1 }
+    .calc.collapsed .cvw { height: auto; min-height: 0; max-height: none; flex: 1 }
+    .cv-col { flex-shrink: 0 }
+    .cvw { height: 34dvh; min-height: 200px; max-height: 340px; flex: none }
+    .rp { flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column }
+    .rpn.vis { flex: 1; min-height: 0 }
+
+    /* Toolbar: faqat active va mode tugmalari matnini ko'rsatadi */
+    .cv-tb .tb > span { display: none }
+    .cv-tb .tb.on > span,
+    .tgm .tb > span { display: inline }
+    .cv-tb .tb.tsh > span { display: inline }
+
+    /* Header */
+    .logo img { height: 32px }
+    .logo-name { font-size: 1rem }
+    .logo-sub { font-size: 0.52rem }
+    .hdr-b span { display: none }
+    .hdr-b { padding: 8px 10px }
+    .nt { padding: 9px 14px; font-size: 11.5px }
+
+    /* About */
+    .stats { grid-template-columns: repeat(2, 1fr); gap: 8px }
+    .stat { padding: 14px 10px }
+    .stat-n { font-size: 22px }
+    .svc-g, .pt-g { grid-template-columns: 1fr }
+    .ab-hero { padding: 24px 18px }
+    .ab-hero h1 { font-size: 22px }
+
+    /* Portfolio */
+    .pc-img { height: 140px }
+
+    /* Result */
+    .res-a { font-size: 18px }
+    .res-btn { padding: 8px 12px; font-size: 10px }
+
+    /* Contact */
+    .cc { grid-template-columns: 1fr; text-align: center; padding: 18px }
+    .cc-b { justify-content: center }
+}

@@ -1,0 +1,17 @@
+/*
+ * PROMET — Tom Markazi
+ * Main stylesheet — barcha modullarni import qiladi
+ *
+ * Tartib muhim: variables → base → components → pages → responsive
+ */
+
+@import '_variables.css';
+@import '_base.css';
+@import '_header.css';
+@import '_calc-layout.css';
+@import '_calc-panels.css';
+@import '_result.css';
+@import '_result-modal.css';
+@import '_about.css';
+@import '_portfolio.css';
+@import '_responsive.css';

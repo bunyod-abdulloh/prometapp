@@ -1,0 +1,67 @@
+/* ═══ RESULT BAR ═══ */
+.res {
+    flex-shrink: 0;
+    padding: 0 16px calc(8px + var(--sab));
+    background: var(--card);
+    border-top: 1px solid var(--brd2);
+    position: relative;
+}
+.res::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 16px;
+    right: 16px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(34, 197, 94, .2), transparent);
+}
+.res-in { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0 }
+.res-l { display: flex; flex-direction: column; gap: 2px }
+.res-lb { font-size: 9px; font-weight: 700; color: var(--t4); text-transform: uppercase; letter-spacing: 1px }
+.res-sub { font-size: 9.5px; color: var(--t4) }
+.res-r { display: flex; flex-direction: column; align-items: flex-end; gap: 4px }
+.res-a {
+    font-family: var(--fm);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--g3);
+    letter-spacing: -.5px;
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(34, 197, 94, .2);
+}
+/* Yashil bg — doim oq matn */
+.res-c {
+    display: inline-flex;
+    padding: 4px 12px;
+    border-radius: 99px;
+    background: var(--g2);
+    font-family: var(--fm);
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(34, 197, 94, .2);
+}
+
+/* ── Hisoblash button ── */
+.res-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    border-radius: var(--r);
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--g2), #0d9240);
+    border: 1px solid rgba(34, 197, 94, .4);
+    cursor: pointer;
+    font-family: var(--f);
+    box-shadow: 0 0 16px rgba(34, 197, 94, .25);
+    transition: all .2s var(--e);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.res-btn:hover { background: var(--g); box-shadow: 0 0 24px rgba(34, 197, 94, .4); transform: translateY(-1px) }
+.res-btn:active { transform: scale(.96) }
+.res-btn.loading { opacity: .6; pointer-events: none }
+.res-btn svg { flex-shrink: 0 }

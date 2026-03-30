@@ -1,0 +1,118 @@
+/* ═══ HEADER ═══ */
+.hdr {
+    flex-shrink: 0;
+    z-index: 100;
+    padding-top: var(--sat);
+    background: var(--hdr-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--brd);
+}
+.hdr::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(34, 197, 94, .3), transparent);
+}
+.hdr-in {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+}
+
+/* ── Logo ── */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+.logo img {
+    height: 38px;
+    border-radius: 6px;
+}
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+.logo-name {
+    font-family: var(--f);
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--t0);
+    letter-spacing: 0.06em;
+}
+.logo-sub {
+    font-family: var(--f);
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--t2);
+    letter-spacing: 0.18em;
+    margin-top: 2px;
+}
+
+/* ── Call button (yashil bg — doim oq matn) ── */
+.hdr-b {
+    padding: 8px 18px;
+    border-radius: 99px;
+    font-size: 11.5px;
+    font-weight: 700;
+    font-family: var(--f);
+    color: #fff;
+    background: var(--g2);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 0 16px rgba(34, 197, 94, .2);
+    transition: all .2s var(--e);
+}
+.hdr-b:hover { background: var(--g); box-shadow: 0 0 24px rgba(34, 197, 94, .3); transform: translateY(-1px) }
+.hdr-b:active { transform: scale(.96) }
+.hdr-b svg { flex-shrink: 0 }
+
+/* ── Navigation ── */
+.nav {
+    display: flex;
+    gap: 0;
+    padding: 0 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none }
+
+.nt {
+    padding: 11px 18px 13px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--t4);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--f);
+    white-space: nowrap;
+    position: relative;
+    transition: color .2s;
+}
+.nt:hover { color: var(--t2) }
+.nt.on { color: var(--g3) }
+.nt::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+    right: 16px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--g);
+    transform: scaleX(0);
+    transition: transform .25s var(--e);
+}
+.nt.on::after { transform: scaleX(1) }

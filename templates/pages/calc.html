@@ -1,0 +1,49 @@
+{# pages/calc.html — Kalkulyator sahifasi #}
+<div class="pg on" id="pg-calc" style="overflow:hidden">
+    <div class="calc">
+        <div class="cv-col">
+            {% include 'includes/_calc_toolbar.html' %}
+            {% include 'includes/_calc_canvas.html' %}
+        </div>
+
+        <div class="rp">
+            <div class="rp-tabs">
+                <button class="rpt on" data-t="roof" onclick="rpTab('roof')">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M1.5 9.5L7 3L12.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+                        <rect x="1.5" y="9.5" width="11" height="3" rx=".5" stroke="currentColor" stroke-width="1.1"/>
+                    </svg>
+                    Tom
+                </button>
+                <button class="rpt" data-t="prof" onclick="rpTab('prof')">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M1 4L3 2L5 4L7 2L9 4L11 2L13 4M1 8L3 6L5 8L7 6L9 8L11 6L13 8M1 12L3 10L5 12L7 10L9 12L11 10L13 12"
+                              stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+                    </svg>
+                    Profnastil
+                </button>
+                <button class="rpt" data-t="color" onclick="rpTab('color')">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.2"/>
+                        <circle cx="7" cy="4" r="1.5" fill="currentColor"/>
+                        <circle cx="4.5" cy="8.5" r="1.5" fill="currentColor"/>
+                        <circle cx="9.5" cy="8.5" r="1.5" fill="currentColor"/>
+                    </svg>
+                    Rang
+                </button>
+                <button class="rpt" data-t="dims" onclick="rpTab('dims')">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M3 1V13M11 1V13M3 7H11" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                    </svg>
+                    O'lcham
+                </button>
+            </div>
+
+            {% include 'includes/_calc_panel_roof.html' %}
+            {% include 'includes/_calc_panel_prof.html' %}
+            {% include 'includes/_calc_panel_color.html' %}
+            {% include 'includes/_calc_panel_dims.html' %}
+            {% include 'includes/_calc_result.html' %}
+        </div>
+    </div>
+</div>

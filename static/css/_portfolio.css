@@ -1,0 +1,58 @@
+/* ═══ PORTFOLIO ═══ */
+.pt-in { max-width: 840px; margin: 0 auto; padding: 24px 20px 80px; width: 100% }
+.pt-h { margin-bottom: 24px }
+.pt-h h1 { font-size: 26px; font-weight: 800; color: var(--t0); margin-bottom: 4px }
+.pt-h p { font-size: 13.5px; color: var(--t2) }
+.pt-g { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px }
+
+.pc {
+    background: var(--card);
+    border: 1px solid var(--brd2);
+    border-radius: var(--r2);
+    overflow: hidden;
+    transition: all .3s var(--e);
+    box-shadow: var(--card-shadow);
+}
+.pc:hover { border-color: var(--gbrd); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0, 0, 0, .4) }
+.pc-img { height: 170px; position: relative; overflow: hidden }
+.pc-bg { position: absolute; inset: 0; transition: transform .5s var(--e) }
+.pc:hover .pc-bg { transform: scale(1.05) }
+.pc-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 30%, rgba(8, 12, 20, .8)) }
+/* Badge — doim oq (yashil bg da) */
+.pc-bd {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    padding: 4px 10px;
+    border-radius: 99px;
+    font-size: 9.5px;
+    font-weight: 800;
+    background: var(--g2);
+    color: #fff;
+    letter-spacing: .5px;
+    box-shadow: 0 0 10px rgba(34, 197, 94, .2);
+}
+.pc-nf { padding: 14px }
+.pc-nf h3 { font-size: 14px; font-weight: 700; color: var(--t0); margin-bottom: 3px }
+.pc-nf p { font-size: 11.5px; color: var(--t3); line-height: 1.6; margin-bottom: 10px }
+.pc-m { display: flex; gap: 8px }
+.pc-m span {
+    font-size: 9.5px;
+    color: var(--t3);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 99px;
+    background: var(--bg3);
+    border: 1px solid var(--brd);
+}
+.pc-m span svg { color: var(--g) }
+
+/* Light modeda hover shadow yengilroq */
+[data-theme="light"] .pc:hover { box-shadow: 0 12px 40px rgba(0, 0, 0, .1) }
+/* Light modeda gradient overlay yengilroq */
+[data-theme="light"] .pc-img::after { background: linear-gradient(transparent 30%, rgba(255, 255, 255, .85)) }
+[data-theme="light"] .pc-nf h3 { color: var(--t1) }

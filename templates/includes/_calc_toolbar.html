@@ -1,0 +1,74 @@
+<div class="cv-tb">
+    <div class="tg tgm">
+        <button class="tb on" id="b-draw" onclick="setMode('draw')">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                <path d="M11.5 1.5L14.5 4.5L5 14H2V11L11.5 1.5Z" stroke="currentColor" stroke-width="1.3"
+                      stroke-linejoin="round"/>
+            </svg>
+            <span>Chizish</span>
+        </button>
+        <button class="tb" id="b-edit" onclick="setMode('edit')">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                <path d="M2 8H6L7 5L9 11L10 8H14" stroke="currentColor" stroke-width="1.3"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Tahrir</span>
+        </button>
+    </div>
+    <div class="sp"></div>
+    <div class="tg">
+        <button class="tb ti" onclick="undoAction()">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                <path d="M4 6H11C12.66 6 14 7.34 14 9C14 10.66 12.66 12 11 12H8" stroke="currentColor"
+                      stroke-width="1.3" stroke-linecap="round"/>
+                <path d="M6 4L4 6L6 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <button class="tb ta" onclick="newShape()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M7 2V12M2 7H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <span>Yangi</span>
+        </button>
+        <button class="tb tx" onclick="resetAll()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M3 3L11 11M11 3L3 11" stroke="currentColor" stroke-width="1.3"
+                      stroke-linecap="round"/>
+            </svg>
+        </button>
+    </div>
+    <div class="sp"></div>
+    <div class="tg">
+        <button class="tb tsh" onclick="addRect()" title="To'rtburchak">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <rect x="1.5" y="2.5" width="11" height="9" rx="1" stroke="currentColor" stroke-width="1.3"/>
+            </svg>
+            <span>▭</span>
+        </button>
+        <button class="tb tsh" onclick="addLShape()" title="L shakl">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 2H8V7H12V12H2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"
+                      fill="none"/>
+            </svg>
+            <span>L</span>
+        </button>
+        <button class="tb tsh" onclick="addTri()" title="Uchburchak">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M7 2L12.5 12H1.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"
+                      fill="none"/>
+            </svg>
+            <span>△</span>
+        </button>
+    </div>
+    <div class="sp"></div>
+    <button class="tb tsn on" id="b-snap" onclick="toggleSnap()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <rect x="1" y="1" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+            <rect x="8" y="1" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+            <rect x="1" y="8" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+            <rect x="8" y="8" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+        <span>Snap</span>
+    </button>
+</div>
