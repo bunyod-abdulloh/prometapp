@@ -99,23 +99,63 @@
     background: var(--card);
     border: 1px solid var(--brd2);
     border-radius: var(--r2);
-    padding: 24px;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 20px;
-    align-items: center;
+    padding: 28px;
     box-shadow: var(--card-shadow);
+    transition: all .25s var(--e);
 }
-.cc h3 { font-size: 18px; font-weight: 700; color: var(--t0); margin-bottom: 8px }
-.cc p { font-size: 13px; color: var(--t2); line-height: 2 }
-/* Yashil bg — doim oq matn */
-.cc-b {
+.cc:hover { border-color: var(--gbrd); box-shadow: var(--gglow) }
+
+.cc h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--t0);
+    margin-bottom: 18px;
+}
+
+.cc-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.cc-item {
     display: flex;
     align-items: center;
-    gap: 7px;
-    padding: 12px 24px;
+    gap: 12px;
+    color: var(--t2);
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: color .2s var(--e);
+}
+
+a.cc-item:hover { color: var(--g3) }
+
+.cc-item svg {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    padding: 8px;
     border-radius: var(--r);
-    font-size: 13px;
+    background: var(--gbg);
+    color: var(--g);
+    transition: all .2s var(--e);
+}
+
+a.cc-item:hover svg {
+    background: var(--g);
+    color: #fff;
+}
+
+.cc-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 13px;
+    border-radius: var(--r);
+    font-size: 13.5px;
     font-weight: 700;
     color: #fff;
     background: var(--g2);
@@ -126,22 +166,5 @@
     transition: all .2s var(--e);
     font-family: var(--f);
 }
-.cc-b:hover { background: var(--g); transform: translateY(-1px) }
-
-.cc-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.cc-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--text-secondary, #64748b);
-}
-
-.cc-item svg {
-    flex-shrink: 0;
-    color: var(--primary, #2563eb);
-}
+.cc-btn:hover { background: var(--g); transform: translateY(-1px) }
+.cc-btn svg { width: 16px; height: 16px }
