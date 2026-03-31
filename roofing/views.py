@@ -92,6 +92,7 @@ class CountryOptionsView(APIView):
 
         types = list(
             qs.values_list('prof_type__name', flat=True)
+            .order_by('prof_type__name')
             .distinct()
         )
         return Response({'types': types})
