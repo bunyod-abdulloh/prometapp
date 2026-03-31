@@ -173,7 +173,7 @@ async function loadThicknesses(countrySlug, profType) {
         btn.dataset.v = t.value;
         btn.innerHTML =
             `<span class="th-val">${t.value} mm</span>` +
-            `<span class="th-price">${fmt(t.price)} so'm/m²</span>`;
+            `<span class="th-price">${fmt(t.price)} so'm/m</span>`;
         btn.addEventListener('click', () => {
             thEl.querySelectorAll('.th-row').forEach(b => b.classList.remove('on'));
             btn.classList.add('on');
