@@ -49,7 +49,7 @@ function toggleSnap() {
 }
 
 /* ── O'lcham panelini yangilash ── */
-function upD() {
+/*function upD() {
     const el = document.getElementById('dims');
     if (!State.shapes.length) {
         el.innerHTML = '<div class="empty">' +
@@ -84,7 +84,7 @@ function upD() {
             rows + '</div>';
     }).join('');
 }
-
+*/
 function setL(si, i, v) {
     const n = parseFloat(v);
     if (!isNaN(n) && n > 0) {

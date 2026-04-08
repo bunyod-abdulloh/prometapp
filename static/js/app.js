@@ -12,7 +12,9 @@
    7. calc.js      — narx hisoblash
    8. ui.js        — UI boshqaruvi
    9. theme.js     — dark/light mode
-  10. app.js       — init (shu fayl)
+  10. wizard.js    — step-by-step wizard
+  11. onboarding.js — yo'riqnoma
+  12. app.js       — init (shu fayl)
 */
 
 /* ── Sinxronizatsiya ── */
@@ -27,7 +29,7 @@ function redraw() {
     updArea();
     if (State.dirty) {
         State.dirty = false;
-        upD();
+        /*upD();*/
     }
 }
 
@@ -38,35 +40,34 @@ function addSpinAnimation() {
     document.head.appendChild(style);
 }
 
-
 /* ── Ilovani ishga tushirish ── */
 window.addEventListener('load', () => {
-    // Canvas elementlarni olish
     cv = document.getElementById('cv');
     cx = cv.getContext('2d');
 
-    // Modullarni init
     initTelegram();
-    initTheme();       // ← Dark/Light mode
+    initTheme();
     initCv();
     initPort();
     attachCanvasEvents();
     addSpinAnimation();
 
-    // Boshlang'ich holatni ko'rsatish
-    upH();
-    upC();
-    redraw();
+    // Wizard — asosiy flow
+    wzInit();
 
-    // Backend'dan ma'lumotlarni yuklash
-    loadColors();
-    loadCountries().then(() => loadCountryOptions(cfg.country));
+    upH();
+    redraw();
 });
 
-/* ── Oyna o'lchami o'zgarganda canvas'ni qayta init qilish ── */
+/* ── Oyna o'lchami o'zgarganda ── */
 window.addEventListener('resize', () => {
     if (document.getElementById('pg-calc').classList.contains('on')) {
-        initCv();
-        redraw();
+        const canvasMode = document.getElementById('canvas-mode');
+        if (canvasMode && canvasMode.style.display !== 'none') {
+            initCv();
+            redraw();
+        }
+        if (WZ.step === 1) wzDrawPreview();
+        if (WZ.step === 5) wzDrawSummaryPreview();
     }
 });

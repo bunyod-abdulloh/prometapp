@@ -5,7 +5,7 @@
 const G = 40, CD = 18, HR = 9;
 const ALP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const SC = ['#22c55e', '#3b82f6', '#a78bfa', '#f59e0b', '#ef4444', '#22d3ee'];
-const API_BASE = 'https://pro-met.uz/api';
+const API_BASE = 'https://14cf-84-54-78-194.ngrok-free.app';
 
 // RAL ranglar
 const RAL = [

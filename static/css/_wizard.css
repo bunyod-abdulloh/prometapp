@@ -1,0 +1,623 @@
+/* ═══ WIZARD ═══ */
+
+/* Wrapper */
+.wz-wrap {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* ── Progress bar ── */
+.wz-progress {
+    flex-shrink: 0;
+    padding: 12px 16px 0;
+    background: var(--bg2);
+}
+
+.wz-prog-track {
+    height: 4px;
+    background: var(--bg4);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+.wz-prog-bar {
+    height: 100%;
+    background: var(--g);
+    border-radius: 4px;
+    transition: width .4s var(--e);
+    width: 16.6%;
+}
+
+.wz-dots {
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+}
+.wz-dot {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+.wz-dot-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    border: 1.5px solid var(--brd2);
+    color: var(--t4);
+    background: var(--bg3);
+    transition: all .3s;
+}
+.wz-dot.on .wz-dot-circle {
+    border-color: var(--g);
+    background: var(--gbg2);
+    color: var(--g);
+    box-shadow: 0 0 0 3px rgba(34,197,94,.1);
+}
+.wz-dot.done .wz-dot-circle {
+    border-color: var(--g);
+    background: var(--g);
+    color: #fff;
+}
+.wz-dot-label {
+    font-size: 8px;
+    font-weight: 600;
+    color: var(--t4);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 60px;
+    transition: color .3s;
+}
+.wz-dot.on .wz-dot-label,
+.wz-dot.done .wz-dot-label { color: var(--t2); }
+
+/* ── Step header ── */
+.wz-header-wrap {
+    flex-shrink: 0;
+    padding: 14px 16px 0;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--brd);
+}
+
+.wz-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+.wz-step-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--gbg2);
+    display: grid;
+    place-items: center;
+    color: var(--g);
+    flex-shrink: 0;
+}
+.wz-step-num {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--g);
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    font-family: 'JetBrains Mono', monospace;
+}
+.wz-step-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--t0);
+    margin: 0;
+    font-family: 'Sora', sans-serif;
+}
+
+.wz-hint {
+    font-size: 12px;
+    color: var(--t3);
+    line-height: 1.5;
+    padding: 8px 12px;
+    background: var(--gbg);
+    border-radius: 8px;
+    border-left: 3px solid var(--g);
+    margin-bottom: 12px;
+}
+
+/* ── Body (scrollable) ── */
+.wz-body {
+    display: none;
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--brd2) transparent;
+}
+.wz-body.vis { display: block; }
+
+/* ── Nav buttons ── */
+.wz-nav {
+    flex-shrink: 0;
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+    background: var(--bg2);
+    border-top: 1px solid var(--brd);
+}
+
+.wz-btn {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Sora', sans-serif;
+    border: none;
+    cursor: pointer;
+    transition: all .15s var(--e);
+    text-align: center;
+}
+.wz-btn:active { transform: scale(.97); }
+
+.wz-btn-prev {
+    background: var(--bg3);
+    color: var(--t2);
+    border: 1px solid var(--brd2);
+    flex: 0 0 auto;
+    padding: 14px 20px;
+}
+.wz-btn-prev:hover { background: var(--bg4); }
+
+.wz-btn-next {
+    background: var(--g);
+    color: #fff;
+}
+.wz-btn-next:hover { background: var(--g2); }
+
+/* ══════════════════════════════════════════════
+   Step 0 — Shakl tanlash grid
+   ══════════════════════════════════════════════ */
+.wz-shapes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.wz-sh {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 4px 8px;
+    border-radius: 12px;
+    border: 1.5px solid var(--brd2);
+    background: var(--card);
+    cursor: pointer;
+    transition: all .15s var(--e);
+    color: var(--t3);
+}
+.wz-sh svg {
+    width: 36px;
+    height: 36px;
+    transition: color .15s;
+}
+.wz-sh span {
+    font-size: 9px;
+    font-weight: 600;
+    font-family: var(--f);
+    text-align: center;
+    line-height: 1.2;
+}
+.wz-sh:active { transform: scale(.94); }
+.wz-sh:hover { border-color: var(--gbrd); color: var(--t2); }
+.wz-sh.on {
+    border-color: var(--g);
+    background: var(--gbg);
+    color: var(--g);
+    box-shadow: 0 0 0 3px rgba(34,197,94,.08);
+}
+
+/* Murakkab chizma — alohida stil */
+.wz-sh-custom {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    gap: 10px;
+    padding: 12px 16px;
+    border-style: dashed;
+    border-color: var(--brd3);
+}
+.wz-sh-custom svg { width: 28px; height: 28px; }
+.wz-sh-custom span { font-size: 11px; }
+.wz-sh-custom.on {
+    border-style: solid;
+    border-color: var(--amber);
+    background: rgba(245,158,11,.06);
+    color: var(--amber);
+}
+
+/* ══════════════════════════════════════════════
+   Step 1 — O'lcham
+   ══════════════════════════════════════════════ */
+.wz-dim-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.wz-inp { display: flex; flex-direction: column; gap: 5px; }
+.wz-inp label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--t3);
+    text-transform: uppercase;
+    letter-spacing: .3px;
+}
+
+.wz-inp-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.wz-inp-wrap input {
+    width: 100%;
+    height: 44px;
+    padding: 0 36px 0 14px;
+    border-radius: 12px;
+    border: 1.5px solid var(--brd2);
+    background: var(--card);
+    color: var(--t1);
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'JetBrains Mono', monospace;
+    outline: none;
+    transition: border-color .15s;
+}
+.wz-inp-wrap input:focus {
+    border-color: var(--g);
+    box-shadow: 0 0 0 3px rgba(34,197,94,.1);
+}
+.wz-inp-wrap input::placeholder { color: var(--t4); }
+.wz-inp-unit {
+    position: absolute;
+    right: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--t4);
+    font-family: 'JetBrains Mono', monospace;
+    pointer-events: none;
+}
+
+/* Preview */
+.wz-preview {
+    border-radius: 14px;
+    border: 1.5px solid var(--brd2);
+    background: var(--bg2);
+    overflow: hidden;
+    position: relative;
+    height: 200px;
+}
+.wz-preview canvas { width: 100%; height: 100%; display: block; }
+.wz-area-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 12px;
+    border-radius: 8px;
+    background: var(--overlay-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--gbrd);
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--g);
+}
+
+/* ══════════════════════════════════════════════
+   Step 2 — Tom turi
+   ══════════════════════════════════════════════ */
+.wz-roof-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.wz-roof-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 8px 12px;
+    border-radius: 14px;
+    border: 1.5px solid var(--brd2);
+    background: var(--card);
+    cursor: pointer;
+    transition: all .15s var(--e);
+    color: var(--t3);
+}
+.wz-roof-card:active { transform: scale(.95); }
+.wz-roof-card.on {
+    border-color: var(--g);
+    background: var(--gbg);
+    color: var(--g);
+}
+.wz-roof-card svg { width: 52px; height: 32px; }
+.wz-roof-card span { font-size: 11px; font-weight: 600; }
+
+/* Pitch slider */
+.wz-pitch { margin-top: 8px; }
+.wz-pitch-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+.wz-pitch-label span:first-child { font-size: 12px; color: var(--t3); font-weight: 600; }
+.wz-pitch-label span:last-child { font-size: 13px; color: var(--g); font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+
+.wz-range-wrap {
+    position: relative;
+    height: 6px;
+    background: var(--bg4);
+    border-radius: 4px;
+}
+.wz-range-fill {
+    height: 100%;
+    background: var(--g);
+    border-radius: 4px;
+    width: 27%;
+    transition: width .15s;
+}
+.wz-range-wrap input[type="range"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    margin: 0;
+    -webkit-appearance: none;
+}
+
+/* ══════════════════════════════════════════════
+   Step 3 — Profnastil
+   ══════════════════════════════════════════════ */
+.wz-prof-section { margin-bottom: 16px; }
+.wz-prof-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--t3);
+    text-transform: uppercase;
+    letter-spacing: .3px;
+    margin-bottom: 8px;
+}
+
+.wz-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.wz-pill {
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 1.5px solid var(--brd2);
+    background: var(--card);
+    color: var(--t2);
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--f);
+    cursor: pointer;
+    transition: all .15s;
+}
+.wz-pill:active { transform: scale(.95); }
+.wz-pill.on {
+    border-color: var(--g);
+    background: var(--gbg);
+    color: var(--g);
+}
+
+.wz-thick-list { display: flex; flex-direction: column; gap: 6px; }
+.wz-thick-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1.5px solid var(--brd2);
+    background: var(--card);
+    cursor: pointer;
+    transition: all .15s;
+}
+.wz-thick-btn:active { transform: scale(.98); }
+.wz-thick-btn.on {
+    border-color: var(--g);
+    background: var(--gbg);
+}
+.wz-th-v { font-size: 14px; font-weight: 600; color: var(--t1); font-family: 'JetBrains Mono', monospace; }
+.wz-th-p { font-size: 11px; color: var(--t3); }
+.wz-thick-btn.on .wz-th-v { color: var(--g); }
+.wz-thick-btn.on .wz-th-p { color: var(--t2); }
+
+.wz-loading {
+    font-size: 12px;
+    color: var(--t4);
+    padding: 8px;
+}
+
+/* ══════════════════════════════════════════════
+   Step 4 — Ranglar
+   ══════════════════════════════════════════════ */
+.wz-color-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+.wz-color {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 8px;
+    border-radius: 12px;
+    border: 1.5px solid var(--brd2);
+    background: var(--card);
+    cursor: pointer;
+    transition: all .15s;
+}
+.wz-color:active { transform: scale(.95); }
+.wz-color.on {
+    border-color: var(--g);
+    box-shadow: 0 0 0 3px rgba(34,197,94,.1);
+}
+.wz-color img {
+    width: 100%;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.wz-color-swatch {
+    width: 100%;
+    height: 48px;
+    border-radius: 8px;
+}
+.wz-color span {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--t2);
+    text-align: center;
+}
+
+/* ══════════════════════════════════════════════
+   Step 5 — Xulosa
+   ══════════════════════════════════════════════ */
+.wz-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--brd);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+.wz-sum-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--card);
+}
+.wz-sum-label { font-size: 13px; color: var(--t3); }
+.wz-sum-val { font-size: 13px; font-weight: 600; color: var(--t1); }
+.wz-sum-accent { color: var(--g); font-family: 'JetBrains Mono', monospace; }
+
+.wz-sum-preview {
+    height: 140px;
+    border-radius: 14px;
+    border: 1.5px solid var(--brd2);
+    background: var(--bg2);
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+.wz-sum-preview canvas { width: 100%; height: 100%; display: block; }
+
+.wz-calc-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 14px;
+    background: var(--g);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Sora', sans-serif;
+    border: none;
+    cursor: pointer;
+    transition: all .15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.wz-calc-btn:hover { background: var(--g2); }
+.wz-calc-btn:active { transform: scale(.97); }
+
+/* ══════════════════════════════════════════════
+   Canvas mode (murakkab chizma)
+   ══════════════════════════════════════════════ */
+.canvas-mode { display: none; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
+
+.wz-canvas-back {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--brd);
+}
+
+.wz-back-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    background: var(--bg3);
+    border: 1px solid var(--brd2);
+    color: var(--t2);
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--f);
+    cursor: pointer;
+    transition: all .15s;
+}
+.wz-back-btn:hover { background: var(--bg4); }
+
+.wz-canvas-done {
+    margin-left: auto;
+    padding: 8px 16px;
+    border-radius: 10px;
+    background: var(--g);
+    border: none;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--f);
+    cursor: pointer;
+}
+.wz-canvas-done:hover { background: var(--g2); }
+
+/* ══════════════════════════════════════════════
+   Mobile
+   ══════════════════════════════════════════════ */
+@media (max-width: 700px) {
+    .wz-shapes { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .wz-sh { padding: 8px 4px 6px; }
+    .wz-sh svg { width: 30px; height: 30px; }
+    .wz-sh span { font-size: 8px; }
+
+    .wz-dots { gap: 2px; }
+    .wz-dot-label { font-size: 7px; max-width: 48px; }
+    .wz-dot-circle { width: 20px; height: 20px; font-size: 9px; }
+
+    .wz-body { padding: 12px; }
+    .wz-preview { height: 170px; }
+    .wz-roof-grid { gap: 6px; }
+
+    .wz-color-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 701px) {
+    .wz-shapes { grid-template-columns: repeat(5, 1fr); }
+    .wz-color-grid { grid-template-columns: repeat(4, 1fr); }
+    .wz-preview { height: 240px; }
+}
