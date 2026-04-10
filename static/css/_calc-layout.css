@@ -97,6 +97,24 @@
     gap: 5px;
     z-index: 3;
 }
+
+/* Yuza badge */
+.cv-area {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    z-index: 3;
+    padding: 6px 14px;
+    border-radius: 10px;
+    background: var(--overlay-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--gbrd);
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--g);
+    box-shadow: var(--gglow);
+}
 .zb {
     width: 36px;
     height: 36px;

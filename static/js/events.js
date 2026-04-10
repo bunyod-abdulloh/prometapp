@@ -2,10 +2,29 @@
    events.js — Canvas event handler'lar
    ══════════════════════════════════════════════ */
 
+const PAN_THRESHOLD = 8; // px — bundan ko'p surilsa pan hisoblanadi
+
 /* ── Drag logikasi ── */
-function handleDrag(wx, wy) {
+function handleDrag(wx, wy, sx, sy) {
     const drg = State.drg;
     if (!drg) return;
+
+    // Pending → harakat bo'yicha pan yoki boshqaga o'tkazish
+    if (drg.t === 'pending') {
+        const dist = Math.hypot(sx - drg.sx, sy - drg.sy);
+        if (dist > PAN_THRESHOLD) {
+            drg.t = 'pan'; // Pan rejimiga o'tish
+            cv.style.cursor = 'grabbing';
+        } else {
+            return; // Hali aniq emas, kutamiz
+        }
+    }
+
+    if (drg.t === 'pan') {
+        V.tx = drg.tx0 + (sx - drg.sx);
+        V.ty = drg.ty0 + (sy - drg.sy);
+        render(); return;
+    }
 
     if (drg.t === 'arc') {
         const sh = State.shapes[drg.si], i = drg.seg;
@@ -70,13 +89,13 @@ function attachCanvasEvents() {
         zoomAt(e.deltaY < 0 ? 1.14 : 1 / 1.14, sp.x, sp.y);
     }, { passive: false });
 
-    // Touch default'ni bloklash (mobile chizish uchun)
+    // Touch default'ni bloklash
     cv.addEventListener('touchstart',  e => { e.preventDefault(); }, { passive: false });
     cv.addEventListener('touchmove',   e => { e.preventDefault(); }, { passive: false });
     cv.addEventListener('touchend',    e => { e.preventDefault(); }, { passive: false });
     cv.addEventListener('contextmenu', e => { e.preventDefault(); });
 
-    // Pointer down
+    // ── Pointer down ──
     cv.addEventListener('pointerdown', e => {
         e.preventDefault();
         try { cv.setPointerCapture(e.pointerId); } catch (x) {}
@@ -94,7 +113,7 @@ function attachCanvasEvents() {
         const w = s2w(sp.x, sp.y);
 
         if (State.mode === 'edit') {
-            // Arc handle bosildimi?
+            // Arc handle
             if (State.sel != null) {
                 const sh = State.shapes[State.sel];
                 for (let i = 0; i < sh.pts.length; i++) {
@@ -106,7 +125,7 @@ function attachCanvasEvents() {
                         cv.style.cursor = 'grabbing'; return;
                     }
                 }
-                // Nuqta bosildimi?
+                // Nuqta
                 for (let i = 0; i < sh.pts.length; i++) {
                     if (Math.hypot(sh.pts[i].x - w.x, sh.pts[i].y - w.y) < phr()) {
                         State.drg = { t: 'pt', si: State.sel, pi: i };
@@ -114,10 +133,10 @@ function attachCanvasEvents() {
                     }
                 }
             }
-            // Shakl tanlandimi?
+            // Shakl ustida
             const hit = topAt(w.x, w.y);
             if (hit != null) {
-                State.sel = hit; State.dirty = true; upD(); render();
+                State.sel = hit; State.dirty = true; render();
                 State.drg = {
                     t: 'sh', si: hit, sx: w.x, sy: w.y,
                     orig: State.shapes[hit].pts.map(p => ({ x: p.x, y: p.y }))
@@ -125,30 +144,23 @@ function attachCanvasEvents() {
                 cv.style.cursor = 'grabbing';
                 hap('impactLight'); return;
             }
-            State.sel = null; State.dirty = true; redraw();
+            // Bo'sh joy — pending (tap=deselect, drag=pan)
+            State.drg = { t: 'pending', sx: sp.x, sy: sp.y, tx0: V.tx, ty0: V.ty, action: 'deselect' };
             return;
         }
 
-        // Draw mode: yangi nuqta qo'shish
+        // Draw mode — pending (tap=nuqta, drag=pan)
         if (State.mode === 'draw') {
-            if (!State.cur) State.cur = { pts: [], segs: [], lens: [], closed: false };
             const wx = State.snap ? Math.round(w.x / G) * G : w.x;
             const wy = State.snap ? Math.round(w.y / G) * G : w.y;
-
-            // Birinchi nuqtaga yaqin → yopish
-            if (State.cur.pts.length > 2 &&
-                Math.hypot(State.cur.pts[0].x - wx, State.cur.pts[0].y - wy) < cdw()) {
-                closeSh(); return;
-            }
-            State.cur.pts.push({ x: wx, y: wy });
-            State.cur.segs.push({ type: 'line', bulge: 0 });
-            State.cur.lens.push(null);
-            upH(); render();
-            hap('impactLight');
+            State.drg = {
+                t: 'pending', sx: sp.x, sy: sp.y, tx0: V.tx, ty0: V.ty,
+                action: 'draw', wx: wx, wy: wy
+            };
         }
     });
 
-    // Pointer move
+    // ── Pointer move ──
     cv.addEventListener('pointermove', e => {
         const sp = csp(e);
         if (ptrs.has(e.pointerId)) ptrs.set(e.pointerId, sp);
@@ -165,7 +177,7 @@ function attachCanvasEvents() {
             y: State.snap && State.mode === 'draw' ? Math.round(w.y / G) * G : w.y
         };
 
-        if (State.drg) { handleDrag(w.x, w.y); return; }
+        if (State.drg) { handleDrag(w.x, w.y, sp.x, sp.y); return; }
 
         // Edit mode hover
         if (State.mode === 'edit') {
@@ -194,14 +206,41 @@ function attachCanvasEvents() {
         render();
     });
 
-    // Pointer up/cancel
+    // ── Pointer up/cancel ──
     function pointerUp(e) {
         ptrs.delete(e.pointerId);
         if (ptrs.size < 2) pinch = null;
+
         if (ptrs.size === 0 && State.drg) {
+            const drg = State.drg;
+
+            // Pending = tap (surilmagan) — asl amalni bajarish
+            if (drg.t === 'pending') {
+                if (drg.action === 'draw') {
+                    // Draw: nuqta qo'shish
+                    if (!State.cur) State.cur = { pts: [], segs: [], lens: [], closed: false };
+
+                    if (State.cur.pts.length > 2 &&
+                        Math.hypot(State.cur.pts[0].x - drg.wx, State.cur.pts[0].y - drg.wy) < cdw()) {
+                        closeSh();
+                    } else {
+                        State.cur.pts.push({ x: drg.wx, y: drg.wy });
+                        State.cur.segs.push({ type: 'line', bulge: 0 });
+                        State.cur.lens.push(null);
+                        upH(); render();
+                        hap('impactLight');
+                    }
+                } else if (drg.action === 'deselect') {
+                    // Edit: tanlashni bekor qilish
+                    State.sel = null;
+                    State.dirty = true;
+                    redraw();
+                }
+            }
+
             State.drg = null;
             cv.style.cursor = State.mode === 'draw' ? 'crosshair' : 'default';
-            State.dirty = true; redraw();
+            if (drg.t !== 'pending') { State.dirty = true; redraw(); }
         }
     }
     cv.addEventListener('pointerup', pointerUp);

@@ -17,12 +17,28 @@ function calcArea(sh) {
 /* ── Umumiy yuzani yangilash ── */
 function updArea() {
     let total = 0;
-    State.shapes.forEach(sh => { total += sArea(sh) / (G * G); });
+    State.shapes.forEach(sh => {
+        if (sh.noArea) return;
+        try { total += sArea(sh) / (G * G); } catch (e) { /* segs xato */ }
+    });
     if (State.cur && State.cur.pts.length >= 3) {
-        total += sArea({ pts: State.cur.pts, closed: true, segs: State.cur.segs }) / (G * G);
+        try {
+            total += sArea({ pts: State.cur.pts, closed: true, segs: State.cur.segs }) / (G * G);
+        } catch (e) { /* */ }
     }
-    const el = document.getElementById('ra');
-    if (el) el.textContent = total.toFixed(2) + ' m²';
+    const txt = total.toFixed(2) + ' m²';
+
+    // Barcha mumkin bo'lgan yuza elementlarni yangilash
+    ['ra', 'cv-area-val', 'wz-area'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = txt;
+    });
+
+    // Fallback: agar cv-area-val yo'q bo'lsa, cv-area ga to'g'ridan-to'g'ri yozish
+    if (!document.getElementById('cv-area-val')) {
+        const cv = document.getElementById('cv-area');
+        if (cv) cv.textContent = txt;
+    }
 }
 
 function calcSegLens(pts, segs) {

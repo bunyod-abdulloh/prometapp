@@ -116,3 +116,15 @@
     transition: transform .25s var(--e);
 }
 .nt.on::after { transform: scaleX(1) }
+
+/* Theme toggle in nav */
+.nt-theme {
+    margin-left: auto;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--t3);
+}
+.nt-theme:hover { color: var(--g3); }
+.nt-theme::after { display: none; }

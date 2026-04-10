@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════
-   canvas.js — Canvas rendering (grid, shakllar, cursor)
+   canvas.js — Canvas rendering + shape dragging
    ══════════════════════════════════════════════ */
 
 /* ── Theme-aware canvas ranglar ── */
@@ -20,6 +20,15 @@ function getCC() {
         cursorDash: light ? 'rgba(34,197,94,.25)' : 'rgba(34,197,94,.3)',
     };
 }
+
+/* ── Drag holati ── */
+const Drag = {
+    active: false,      // hozir drag qilinmoqdami
+    shapeIdx: -1,       // qaysi shape drag qilinmoqda
+    startX: 0,          // drag boshlangan world koordinata
+    startY: 0,
+    origPts: [],        // drag boshidagi original nuqtalar (deep copy)
+};
 
 function initCv() {
     const w = document.getElementById('cwrap');
@@ -96,7 +105,11 @@ function drawShape(sh, si, isSel) {
     const s = V.s;
     const col = isSel ? '#22c55e' : SC[si % SC.length];
 
-    // Fill & stroke
+    // Drag paytida ko'chirilayotgan shaklga shaffoflik
+    const isDragging = Drag.active && Drag.shapeIdx === si;
+
+    if (isDragging) cx.globalAlpha = 0.75;
+
     buildPath(sh);
     cx.fillStyle = isSel ? cc.fillSel : cc.fillNorm;
     cx.fill();
@@ -149,7 +162,6 @@ function drawShape(sh, si, isSel) {
             cx.fill();
             cx.strokeStyle = cc.arcStroke; cx.lineWidth = 2 / s; cx.stroke();
 
-            // Arc ikonka — doim oq (rangli bg da)
             cx.fillStyle = '#fff';
             cx.font = `bold ${9 / s}px sans-serif`;
             cx.textAlign = 'center'; cx.textBaseline = 'middle';
@@ -165,6 +177,8 @@ function drawShape(sh, si, isSel) {
             }
         });
     }
+
+    if (isDragging) cx.globalAlpha = 1;
 }
 
 /* ── Chizish kursori ── */
@@ -198,7 +212,156 @@ function drawCursor() {
     });
 }
 
-/* ── Zoom ── */
+/* ══════════════════════════════════════════════
+   DRAG LOGIC — shaklni surish
+   ══════════════════════════════════════════════ */
+
+// Screen koordinatani world koordinataga o'girish
+function screenToWorld(sx, sy) {
+    return {
+        x: (sx - V.tx) / V.s,
+        y: (sy - V.ty) / V.s,
+    };
+}
+
+// Nuqta segmentga (chiziqqa) yaqinligini tekshirish
+function distToSeg(px, py, ax, ay, bx, by) {
+    const dx = bx - ax, dy = by - ay;
+    const lenSq = dx * dx + dy * dy;
+    if (lenSq === 0) return Math.hypot(px - ax, py - ay);
+    let t = ((px - ax) * dx + (py - ay) * dy) / lenSq;
+    t = Math.max(0, Math.min(1, t));
+    return Math.hypot(px - (ax + t * dx), py - (ay + t * dy));
+}
+
+// Point-in-polygon (ray casting) — yopiq shakllar uchun
+function pointInShape(wx, wy, sh) {
+    if (!sh.closed) return false;
+    const pts = sh.pts;
+    let inside = false;
+    for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+        const xi = pts[i].x, yi = pts[i].y;
+        const xj = pts[j].x, yj = pts[j].y;
+        if ((yi > wy) !== (yj > wy) &&
+            wx < (xj - xi) * (wy - yi) / (yj - yi) + xi) {
+            inside = !inside;
+        }
+    }
+    return inside;
+}
+
+// Ochiq shakllar uchun — chiziq segmentlariga yaqinlik
+function nearShapeEdge(wx, wy, sh, threshold) {
+    for (let i = 0; i < sh.pts.length - (sh.closed ? 0 : 1); i++) {
+        const j = (i + 1) % sh.pts.length;
+        if (distToSeg(wx, wy, sh.pts[i].x, sh.pts[i].y, sh.pts[j].x, sh.pts[j].y) < threshold) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Berilgan world koordinatadagi shaklni topish (eng ustidagisi)
+function hitTestShape(wx, wy) {
+    const threshold = 10 / V.s; // 10px screen masofada
+    // Oxirgi chizilgan shakl ustda — teskari tartibda tekshiramiz
+    for (let i = State.shapes.length - 1; i >= 0; i--) {
+        const sh = State.shapes[i];
+        if (pointInShape(wx, wy, sh) || nearShapeEdge(wx, wy, sh, threshold)) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+// Drag boshlash
+function dragStart(e) {
+    // Faqat edit modeda va hech qanday point/arc drag bo'lmaganda
+    if (State.mode !== 'edit') return false;
+    // Agar point yoki arc handle ustida bo'lsa — drag qilmaymiz
+    if (State.hovP || State.hovA) return false;
+
+    const rect = cv.getBoundingClientRect();
+    const sx = e.clientX - rect.left;
+    const sy = e.clientY - rect.top;
+    const w = screenToWorld(sx, sy);
+
+    const idx = hitTestShape(w.x, w.y);
+    if (idx < 0) return false;
+
+    // Shaklni tanlash
+    State.sel = idx;
+
+    Drag.active = true;
+    Drag.shapeIdx = idx;
+    Drag.startX = w.x;
+    Drag.startY = w.y;
+    // Original nuqtalarni deep copy qilib saqlaymiz
+    Drag.origPts = State.shapes[idx].pts.map(p => ({ x: p.x, y: p.y }));
+
+    cv.style.cursor = 'grabbing';
+    render();
+    return true;
+}
+
+// Drag davomida — shaklni siljitish
+function dragMove(e) {
+    if (!Drag.active) return false;
+
+    const rect = cv.getBoundingClientRect();
+    const sx = e.clientX - rect.left;
+    const sy = e.clientY - rect.top;
+    const w = screenToWorld(sx, sy);
+
+    const dx = w.x - Drag.startX;
+    const dy = w.y - Drag.startY;
+
+    const sh = State.shapes[Drag.shapeIdx];
+    // Har bir nuqtani original + delta ga o'rnatamiz
+    Drag.origPts.forEach((orig, i) => {
+        sh.pts[i].x = snapToGrid(orig.x + dx);
+        sh.pts[i].y = snapToGrid(orig.y + dy);
+    });
+
+    render();
+    return true;
+}
+
+// Grid snap yordamchi funksiya (agar mavjud bo'lmasa)
+function snapToGrid(val) {
+    if (typeof snap === 'function') return snap(val);
+    return Math.round(val / G) * G;
+}
+
+// Drag tugallash
+function dragEnd() {
+    if (!Drag.active) return false;
+
+    Drag.active = false;
+    Drag.shapeIdx = -1;
+    Drag.origPts = [];
+    cv.style.cursor = '';
+    render();
+    return true;
+}
+
+// Hover paytida cursor o'zgartirish
+function dragHoverCheck(e) {
+    if (Drag.active || State.mode !== 'edit') return;
+    if (State.hovP || State.hovA) return; // point/arc ustida bo'lsa default
+
+    const rect = cv.getBoundingClientRect();
+    const sx = e.clientX - rect.left;
+    const sy = e.clientY - rect.top;
+    const w = screenToWorld(sx, sy);
+
+    const idx = hitTestShape(w.x, w.y);
+    cv.style.cursor = idx >= 0 ? 'grab' : '';
+}
+
+/* ══════════════════════════════════════════════
+   Zoom
+   ══════════════════════════════════════════════ */
 function zoomAt(f, sx, sy) {
     const ns = clamp(V.s * f, V.mn, V.mx);
     if (ns === V.s) return;

@@ -1,5 +1,6 @@
 <div class="cvw" id="cwrap">
     <canvas id="cv"></canvas>
+    <div class="cv-area" id="cv-area">0.00 m²</div>
     <div class="cv-z">
         <button class="zb" onclick="zoomIn()">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -52,4 +53,75 @@
             <span>1 barmoq = chizish · 2 barmoq = zoom/pan</span>
         </div>
     </div>
+
+    {# Canvas tutorial — step-by-step, template ichida #}
+    <template id="cv-tut-tpl">
+        <div class="cv-tut" id="cv-tut">
+            <div class="cv-tut-bg" onclick="closeTut()"></div>
+            <svg class="cv-tut-svg" viewBox="0 0 300 240" fill="none">
+
+                {# Step 1: A nuqta #}
+                <circle class="tut-el tut-pulse" data-s="1" cx="70" cy="60" r="8"/>
+                <circle class="tut-el tut-dot" data-s="1" cx="70" cy="60" r="5"/>
+                <text class="tut-el tut-label" data-s="1" x="56" y="54">A</text>
+
+                {# Step 2: B nuqta + A-B chiziq #}
+                <line class="tut-el tut-line" data-s="2" x1="70" y1="60" x2="230" y2="60"/>
+                <circle class="tut-el tut-pulse" data-s="2" cx="230" cy="60" r="8"/>
+                <circle class="tut-el tut-dot" data-s="2" cx="230" cy="60" r="5"/>
+                <text class="tut-el tut-label" data-s="2" x="236" y="54">B</text>
+
+                {# Step 3: C nuqta + B-C chiziq #}
+                <line class="tut-el tut-line" data-s="3" x1="230" y1="60" x2="230" y2="180"/>
+                <circle class="tut-el tut-pulse" data-s="3" cx="230" cy="180" r="8"/>
+                <circle class="tut-el tut-dot" data-s="3" cx="230" cy="180" r="5"/>
+                <text class="tut-el tut-label" data-s="3" x="236" y="196">C</text>
+
+                {# Step 4: D nuqta + C-D chiziq #}
+                <line class="tut-el tut-line" data-s="4" x1="230" y1="180" x2="70" y2="180"/>
+                <circle class="tut-el tut-pulse" data-s="4" cx="70" cy="180" r="8"/>
+                <circle class="tut-el tut-dot" data-s="4" cx="70" cy="180" r="5"/>
+                <text class="tut-el tut-label" data-s="4" x="56" y="196">D</text>
+
+                {# Step 5: D-A yopish chiziq #}
+                <line class="tut-el tut-line" data-s="5" x1="70" y1="180" x2="70" y2="60"/>
+                <circle class="tut-el tut-pulse" data-s="5" cx="70" cy="60" r="8"/>
+
+                {# Step 6: Arc — tepki chiziqni egri qilish #}
+                <path class="tut-el tut-arc" data-s="6" d="M70 60 Q150 20 230 60"/>
+                <line class="tut-el tut-hide" data-s="6" x1="70" y1="60" x2="230" y2="60"/>
+                <circle class="tut-el tut-handle" data-s="6" cx="150" cy="28" r="7"/>
+
+                {# Kursor (har step da JS orqali pozitsiya o'zgaradi) #}
+                <g class="tut-cursor" id="tut-cursor">
+                    <circle r="14" fill="rgba(34,197,94,.12)" stroke="rgba(34,197,94,.5)" stroke-width="1.5"/>
+                    <circle r="6" fill="rgba(34,197,94,.85)"/>
+                    <circle r="2.5" fill="#fff"/>
+                </g>
+            </svg>
+
+            {# Matn va navigatsiya #}
+            <div class="cv-tut-info">
+                <div class="cv-tut-counter" id="tut-counter">1 / 6</div>
+                <div class="cv-tut-msg" id="tut-msg">Bosib nuqta qo'ying</div>
+            </div>
+            <div class="cv-tut-nav">
+                <button class="cv-tut-prev" id="tut-prev-btn" onclick="tutPrev()" style="display:none">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M15 19L8 12L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round"/>
+                    </svg>
+                    Orqaga
+                </button>
+                <button class="cv-tut-next" id="tut-next-btn" onclick="tutNext()">
+                    Keyingi
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <button class="cv-tut-skip" onclick="closeTut()">O'tkazib yuborish</button>
+        </div>
+    </template>
 </div>

@@ -1,0 +1,236 @@
+/* ═══ CANVAS TUTORIAL — Step-by-step ═══ */
+
+.cv-tut {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    animation: tutFadeIn .3s ease;
+}
+
+.cv-tut-bg {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 12, 20, .78);
+    backdrop-filter: blur(3px);
+    pointer-events: auto;
+    cursor: default;
+}
+[data-theme="light"] .cv-tut-bg { background: rgba(248, 250, 252, .82); }
+
+.cv-tut-svg {
+    position: relative;
+    width: 280px;
+    height: 220px;
+    z-index: 1;
+}
+
+/* ── Barcha elementlar default yashirin ── */
+.tut-el { opacity: 0; transition: opacity .35s ease; }
+.tut-el.vis { opacity: 1; }
+
+/* ── Element turlari ── */
+.tut-dot {
+    fill: #22c55e;
+}
+.tut-dot.vis { animation: tutDotPop .3s ease forwards; }
+
+.tut-label {
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    fill: #22c55e;
+}
+.tut-label.vis { opacity: .7; }
+
+.tut-line {
+    stroke: #22c55e;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+}
+.tut-line.vis { animation: tutLineDraw .5s ease forwards; }
+
+.tut-pulse {
+    fill: none;
+    stroke: #22c55e;
+    stroke-width: 2;
+    opacity: 0;
+}
+.tut-pulse.vis { animation: tutPulse .6s ease forwards; }
+
+/* Arc — egri chiziq */
+.tut-arc {
+    stroke: #22c55e;
+    stroke-width: 2;
+    stroke-linecap: round;
+    fill: none;
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+}
+.tut-arc.vis { animation: tutLineDraw .6s ease forwards; }
+
+/* A-B tepki chiziqni yashirish (arc paydo bo'lganda) */
+.tut-hide {
+    stroke: var(--bg, #080c14);
+    stroke-width: 4;
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+}
+[data-theme="light"] .tut-hide { stroke: #f8fafc; }
+.tut-hide.vis { animation: tutLineDraw .3s ease forwards; }
+
+/* Arc handle */
+.tut-handle {
+    fill: rgba(167, 139, 250, .8);
+    stroke: #0c1220;
+    stroke-width: 2;
+}
+.tut-handle.vis { animation: tutDotPop .3s ease forwards; }
+
+/* ── Kursor ── */
+.tut-cursor {
+    transition: transform .5s ease, opacity .3s ease;
+    opacity: 0;
+}
+.tut-cursor.vis { opacity: 1; }
+.tut-cursor.tap { animation: tutTap .25s ease; }
+
+/* ── Info va Nav ── */
+.cv-tut-info {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+.cv-tut-counter {
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--g);
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+}
+.cv-tut-msg {
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Sora', sans-serif;
+    color: var(--t1);
+    min-height: 22px;
+    transition: opacity .2s;
+}
+
+.cv-tut-nav {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    pointer-events: auto;
+}
+
+.cv-tut-prev {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: 1px solid var(--brd2);
+    background: var(--bg3);
+    color: var(--t2);
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
+    transition: all .15s;
+}
+.cv-tut-prev:hover { background: var(--bg4); color: var(--t1); }
+.cv-tut-prev:active { transform: scale(.95); }
+.cv-tut-prev svg { transition: transform .2s; }
+.cv-tut-prev:hover svg { transform: translateX(-2px); }
+
+.cv-tut-skip {
+    position: relative;
+    z-index: 2;
+    padding: 8px 22px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: var(--t4);
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: all .15s;
+}
+.cv-tut-skip:hover { color: var(--t2); }
+.cv-tut-skip:active { transform: scale(.95); }
+
+.cv-tut-next {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 22px;
+    border-radius: 10px;
+    border: none;
+    background: var(--g);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
+    transition: all .15s;
+}
+.cv-tut-next:hover { background: var(--g2); }
+.cv-tut-next:active { transform: scale(.95); }
+.cv-tut-next svg { transition: transform .2s; }
+.cv-tut-next:hover svg { transform: translateX(2px); }
+
+/* ── Qo'llanma tugmasi (canvas toolbar) ── */
+.wz-guide-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    background: var(--gbg);
+    border: 1px solid var(--gbrd);
+    color: var(--g);
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--f);
+    cursor: pointer;
+    transition: all .15s;
+}
+.wz-guide-btn:hover { background: var(--gbg2); }
+.wz-guide-btn:active { transform: scale(.95); }
+
+/* ══════════════════════════════════════════════
+   Keyframes
+   ══════════════════════════════════════════════ */
+
+@keyframes tutFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes tutDotPop {
+    0%   { opacity: 0; r: 0; }
+    60%  { opacity: 1; r: 7; }
+    100% { opacity: 1; r: 5; }
+}
+
+@keyframes tutPulse {
+    0%   { opacity: .7; r: 6; stroke-width: 2.5; }
+    100% { opacity: 0;  r: 26; stroke-width: .3; }
+}
+
+@keyframes tutLineDraw { to { stroke-dashoffset: 0; } }
+
+@keyframes tutTap {
+    0%   { transform: var(--pos) scale(1); }
+    50%  { transform: var(--pos) scale(.7); }
+    100% { transform: var(--pos) scale(1); }
+}

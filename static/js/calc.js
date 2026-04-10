@@ -31,7 +31,7 @@ function calcA() {
 }
 
 function calcCo(a) {
-    return Math.round(a * (PRICES[cfg.country]?.[cfg.thick] || 60000) * (TMUL[cfg.type] || 1));
+    return Math.round(a * ([cfg.country]?.[cfg.thick] || 60000) * (cfg.type || 1));
 }
 
 function upC() {

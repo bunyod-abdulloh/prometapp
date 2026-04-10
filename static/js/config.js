@@ -5,7 +5,7 @@
 const G = 40, CD = 18, HR = 9;
 const ALP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const SC = ['#22c55e', '#3b82f6', '#a78bfa', '#f59e0b', '#ef4444', '#22d3ee'];
-const API_BASE = 'https://14cf-84-54-78-194.ngrok-free.app';
+const API_BASE = 'https://f54f-84-54-78-194.ngrok-free.app/api';
 
 // RAL ranglar
 const RAL = [
@@ -44,7 +44,7 @@ const PROJ = [
 ];
 
 // Tanlangan konfiguratsiya
-const cfg = { roof: 'gable', type: 'glyanseviy', thick: '0.40', profPrice: '0', country: 'china', color: 'red' };
+const cfg = { roof: 'gable', type: 'glyanseviy', thick: '0.40', profPrice: '0', country: 'china', color: 'red', pitch: 2 };
 
 // Viewport holati
 const V = { s: 1, tx: 0, ty: 0, mn: 0.07, mx: 14 };

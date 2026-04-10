@@ -4,39 +4,6 @@
     {# ═══ WIZARD MODE ═══ #}
     <div class="wz-wrap" id="wz-wrap">
 
-        {# Progress #}
-        <div class="wz-progress">
-            <div class="wz-prog-track">
-                <div class="wz-prog-bar" id="wz-prog-bar"></div>
-            </div>
-            <div class="wz-dots">
-                <div class="wz-dot on">
-                    <div class="wz-dot-circle">1</div>
-                    <span class="wz-dot-label">Shakl</span>
-                </div>
-                <div class="wz-dot">
-                    <div class="wz-dot-circle">2</div>
-                    <span class="wz-dot-label">O'lcham</span>
-                </div>
-                <div class="wz-dot">
-                    <div class="wz-dot-circle">3</div>
-                    <span class="wz-dot-label">Tom</span>
-                </div>
-                <div class="wz-dot">
-                    <div class="wz-dot-circle">4</div>
-                    <span class="wz-dot-label">Profnastil</span>
-                </div>
-                <div class="wz-dot">
-                    <div class="wz-dot-circle">5</div>
-                    <span class="wz-dot-label">Rang</span>
-                </div>
-                <div class="wz-dot">
-                    <div class="wz-dot-circle">6</div>
-                    <span class="wz-dot-label">Natija</span>
-                </div>
-            </div>
-        </div>
-
         {# Step header #}
         <div class="wz-header-wrap">
             <div class="wz-header" id="wz-header"></div>
@@ -55,6 +22,7 @@
                 <canvas id="wz-preview-cv"></canvas>
                 <div class="wz-area-badge" id="wz-area">0.00 m²</div>
             </div>
+            <div id="wz-edit-wrap"></div>
         </div>
 
         {# ═══ Step 2 — Tom turi ═══ #}
@@ -113,9 +81,7 @@
 
         {# ═══ Step 5 — Xulosa ═══ #}
         <div class="wz-body" id="wz-s5">
-            <div class="wz-sum-preview">
-                <canvas id="wz-sum-cv"></canvas>
-            </div>
+
             <div class="wz-summary" id="wz-summary"></div>
             <button class="wz-calc-btn" onclick="wzCalculate()">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -128,8 +94,28 @@
 
         {# Navigation #}
         <div class="wz-nav">
-            <button class="wz-btn wz-btn-prev" id="wz-prev" onclick="wzPrev()" style="display:none">← Orqaga</button>
-            <button class="wz-btn wz-btn-next" id="wz-next" onclick="wzNext()">Keyingi →</button>
+            <button class="wz-btn wz-btn-prev" id="wz-prev" onclick="wzPrev()" style="display:none">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M15 19L8 12L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                </svg>
+                Orqaga
+            </button>
+            <button class="wz-btn wz-btn-home" id="wz-home" onclick="wzGoHome()" style="display:none">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M3 9L12 2L21 9V20C21 20.55 20.55 21 20 21H4C3.45 21 3 20.55 3 20V9Z" stroke="currentColor"
+                          stroke-width="1.8" stroke-linejoin="round"/>
+                    <path d="M9 21V12H15V21" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+                Bosh sahifa
+            </button>
+            <button class="wz-btn wz-btn-next" id="wz-next" onclick="wzNext()">
+                Keyingi
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                </svg>
+            </button>
         </div>
     </div>
 
@@ -142,8 +128,21 @@
                 </svg>
                 Orqaga
             </button>
-            <button class="wz-canvas-done" onclick="wzBackFromCanvas()">
-                Tayyor — davom etish →
+            <button class="wz-guide-btn" onclick="showCanvasTut()">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.2"/>
+                    <path d="M5.5 5.5C5.5 4.67 6.17 4 7 4C7.83 4 8.5 4.67 8.5 5.5C8.5 6.33 7.83 7 7 7V8"
+                          stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    <circle cx="7" cy="9.5" r=".6" fill="currentColor"/>
+                </svg>
+                Qo'llanma
+            </button>
+            <button class="wz-btn wz-btn-next" onclick="wzBackFromCanvas()">
+                Davom etish
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                </svg>
             </button>
         </div>
 
@@ -156,7 +155,7 @@
     </div>
 
     {# Result (res bar va modal) #}
-<!--    {% include 'includes/_calc_result.html' %}-->
+    {% include 'includes/_calc_result.html' %}
     {% include 'includes/_calc_result_modal.html' %}
 
 </div>

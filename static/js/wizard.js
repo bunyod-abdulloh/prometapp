@@ -30,7 +30,7 @@ window.wzInit = function () {
 const STEPS = [
     {
         title: 'Uy shaklini tanlang',
-        hint: 'Uyingizni tepadan qarasangiz qanday ko\'rinishda? Eng mos shaklni tanlang.',
+        hint: 'Uyingiz tepadan qarasangiz qanday ko\'rinishda? Eng mos shaklni tanlang.',
         icon: '<path d="M3 9L12 2L21 9V20C21 20.55 20.55 21 20 21H4C3.45 21 3 20.55 3 20V9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 21V12H15V21" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>',
     },
     {
@@ -72,14 +72,6 @@ const SHAPES = [
             { key: 'h', label: "Bo'yi", def: 8 },
         ],
         pts: d => [[0,0],[d.w,0],[d.w,d.h],[0,d.h]],
-    },
-    /* 2 */ {
-        id: 'square', name: 'Kvadrat',
-        svg: 'M8 8H40V40H8Z',
-        fields: [
-            { key: 'a', label: 'Tomoni', def: 8 },
-        ],
-        pts: d => [[0,0],[d.a,0],[d.a,d.a],[0,d.a]],
     },
     /* 3 */ {
         id: 'l_left', name: 'L-shakl (chap)',
@@ -170,7 +162,7 @@ const SHAPES = [
         },
     },
     /* 9 */ {
-        id: 'g_shape', name: "G-shakl",
+        id: 'g_shape', name: "C-shakl",
         svg: 'M6 6H42V18H18V30H42V42H6Z',
         fields: [
             { key: 'w', label: 'Umumiy eni', def: 12 },
@@ -184,88 +176,7 @@ const SHAPES = [
             return [[0,0],[d.w,0],[d.w,top],[d.w-iw,top],[d.w-iw,top+ih],[d.w,top+ih],[d.w,d.h],[0,d.h]];
         },
     },
-    /* 10 */ {
-        id: 'z_shape', name: "Z-shakl",
-        svg: 'M6 6H26V18H42V42H22V30H6Z',
-        fields: [
-            { key: 'w', label: 'Umumiy eni', def: 12 },
-            { key: 'h', label: "Umumiy bo'yi", def: 10 },
-            { key: 'sw', label: 'Siljish eni', def: 5 },
-            { key: 'sh', label: "O'rta bo'yi", def: 3 },
-        ],
-        pts: d => {
-            const sw = Math.min(d.sw, d.w - .5);
-            const mid = Math.min(d.sh, d.h - 1);
-            const top = (d.h - mid) / 2;
-            return [[0,0],[d.w-sw,0],[d.w-sw,top],[d.w,top],[d.w,d.h],[sw,d.h],[sw,top+mid],[0,top+mid]];
-        },
-    },
-    /* 11 */ {
-        id: 'plus', name: "+-shakl",
-        svg: 'M16 6H32V16H42V32H32V42H16V32H6V16H16Z',
-        fields: [
-            { key: 'w', label: 'Umumiy eni', def: 12 },
-            { key: 'h', label: "Umumiy bo'yi", def: 12 },
-            { key: 'cw', label: "Markaz eni", def: 4 },
-            { key: 'ch', label: "Markaz bo'yi", def: 4 },
-        ],
-        pts: d => {
-            const cx = (d.w - Math.min(d.cw, d.w)) / 2;
-            const cy = (d.h - Math.min(d.ch, d.h)) / 2;
-            const cw = Math.min(d.cw, d.w), ch = Math.min(d.ch, d.h);
-            return [
-                [cx,0],[cx+cw,0],[cx+cw,cy],[d.w,cy],[d.w,cy+ch],[cx+cw,cy+ch],
-                [cx+cw,d.h],[cx,d.h],[cx,cy+ch],[0,cy+ch],[0,cy],[cx,cy]
-            ];
-        },
-    },
-    /* 12 */ {
-        id: 'h_shape', name: "H-shakl",
-        svg: 'M6 6H16V18H32V6H42V42H32V30H16V42H6Z',
-        fields: [
-            { key: 'w', label: 'Umumiy eni', def: 12 },
-            { key: 'h', label: "Umumiy bo'yi", def: 10 },
-            { key: 'lw', label: "Yon qanotlar eni", def: 3 },
-            { key: 'mh', label: "Ko'prik bo'yi", def: 3 },
-        ],
-        pts: d => {
-            const lw = Math.min(d.lw, d.w / 2 - .1);
-            const mh = Math.min(d.mh, d.h - .5);
-            const mt = (d.h - mh) / 2;
-            return [
-                [0,0],[lw,0],[lw,mt],[d.w-lw,mt],[d.w-lw,0],[d.w,0],
-                [d.w,d.h],[d.w-lw,d.h],[d.w-lw,mt+mh],[lw,mt+mh],[lw,d.h],[0,d.h]
-            ];
-        },
-    },
-    /* 13 */ {
-        id: 'trap', name: "Trapetsiya",
-        svg: 'M14 8H34V8L42 40H6Z',
-        fields: [
-            { key: 'tw', label: "Tepa eni", def: 6 },
-            { key: 'bw', label: "Past eni", def: 10 },
-            { key: 'h', label: "Bo'yi", def: 8 },
-        ],
-        pts: d => {
-            const off = (d.bw - d.tw) / 2;
-            return [[off,0],[off+d.tw,0],[d.bw,d.h],[0,d.h]];
-        },
-    },
-    /* 14 */ {
-        id: 'wide_l', name: "Keng L",
-        svg: 'M6 6H30V20H42V42H6Z',
-        fields: [
-            { key: 'w', label: 'Umumiy eni', def: 14 },
-            { key: 'h', label: "Umumiy bo'yi", def: 10 },
-            { key: 'sw', label: "Kengayish eni", def: 4 },
-            { key: 'sh', label: "Kengayish bo'yi", def: 6 },
-        ],
-        pts: d => {
-            const sw = Math.min(d.sw, d.w - .5), sh = Math.min(d.sh, d.h - .5);
-            return [[0,0],[d.w-sw,0],[d.w-sw,d.h-sh],[d.w,d.h-sh],[d.w,d.h],[0,d.h]];
-        },
-    },
-    /* 15 — Murakkab (qo'lda chizish) */ {
+    /* 16 — Murakkab (qo'lda chizish) */ {
         id: 'custom', name: "Murakkab chizma",
         svg: 'M10 38L16 14L26 26L34 10L40 22',
         fields: [],
@@ -277,8 +188,6 @@ const SHAPES = [
 /* ══════════════════════════════════════════════
    Wizard boshqaruvi
    ══════════════════════════════════════════════ */
-
-
 
 /* ── Step'ga o'tish ── */
 function wzGoTo(n) {
@@ -316,6 +225,10 @@ function wzNext() {
     // Murakkab chizma tanlangan — to'g'ridan-to'g'ri canvas'ga o'tish
     if (WZ.step === 0 && WZ.customDraw) {
         wzSwitchToCanvas();
+        if (!localStorage.getItem('promet-tut-seen')) {
+            localStorage.setItem('promet-tut-seen', '1');
+            setTimeout(() => showCanvasTut(), 300);
+        }
         return;
     }
     if (WZ.step < WZ.total - 1) wzGoTo(WZ.step + 1);
@@ -359,16 +272,42 @@ function wzUpdateHeader() {
 function wzUpdateNav() {
     const prev = document.getElementById('wz-prev');
     const next = document.getElementById('wz-next');
+    const home = document.getElementById('wz-home');
 
     if (prev) prev.style.display = WZ.step === 0 ? 'none' : '';
-    if (next) {
-        if (WZ.step === WZ.total - 1) {
-            next.style.display = 'none'; // Oxirgi stepda "Hisoblash" tugmasi bor
-        } else {
+
+    if (WZ.step === WZ.total - 1) {
+        // Oxirgi step: Orqaga + Bosh sahifa ko'rinadi, Keyingi yashirinadi
+        if (next) next.style.display = 'none';
+        if (home) home.style.display = '';
+    } else {
+        if (next) {
             next.style.display = '';
-            next.textContent = 'Keyingi →';
+            const isCustom = WZ.step === 0 && WZ.customDraw;
+            next.innerHTML = (isCustom ? "Chizmaga o'tish" : 'Keyingi') +
+                ' <svg width="18" height="18" viewBox="0 0 24 24" fill="none">' +
+                '<path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
         }
+        if (home) home.style.display = 'none';
     }
+}
+
+/* ── Bosh sahifaga qaytish — wizardni reset qilish ── */
+function wzGoHome() {
+    WZ.step = 0;
+    WZ.shape = 'rect';
+    WZ.dims = {};
+    WZ.customDraw = false;
+    State.shapes = [];
+    State.sel = null;
+    State.dirty = true;
+
+    // Shapes grid ni qayta render qilish uchun tozalash
+    const grid = document.getElementById('wz-shapes');
+    if (grid) grid.innerHTML = '';
+
+    wzGoTo(0);
+    hap('impactLight');
 }
 
 /* ══════════════════════════════════════════════
@@ -408,7 +347,10 @@ function wzPickShape(id) {
     // Keyingi tugma matnini o'zgartirish
     const next = document.getElementById('wz-next');
     if (next) {
-        next.textContent = WZ.customDraw ? "Chizmaga o'tish →" : 'Keyingi →';
+        const label = WZ.customDraw ? "Chizmaga o'tish" : 'Keyingi';
+        next.innerHTML = label +
+            ' <svg width="18" height="18" viewBox="0 0 24 24" fill="none">' +
+            '<path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     }
 
     hap('impactLight');
@@ -438,7 +380,29 @@ function wzInitDims() {
         '</div>';
     }).join('');
 
+    // "Chizmada tahrirlash" tugmasi
+    const editWrap = document.getElementById('wz-edit-wrap');
+    if (editWrap) {
+        editWrap.innerHTML =
+            '<button class="wz-edit-btn" onclick="wzEditInCanvas()">' +
+                '<svg width="15" height="15" viewBox="0 0 16 16" fill="none">' +
+                '<path d="M11.5 1.5L14.5 4.5L5 14H2V11L11.5 1.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>' +
+                '</svg>' +
+                'Chizmada tahrirlash' +
+            '</button>';
+    }
+
     wzDrawPreview();
+}
+
+/* ── Template shaklni canvas'da tahrirlash ── */
+function wzEditInCanvas() {
+    wzSyncToState();
+    wzSwitchToCanvas();
+    setMode('edit');
+    State.sel = 0;
+    State.dirty = true;
+    redraw();
 }
 
 function wzDimChange(inp) {
@@ -532,9 +496,30 @@ function wzDrawPreview() {
     }
 
     // Yuza
-    const area = wzCalcArea(raw);
+    const sh2 = SHAPES.find(s => s.id === WZ.shape);
+    const area = sh2.area ? sh2.area(WZ.dims) : wzCalcArea(raw);
     const areaEl = document.getElementById('wz-area');
     if (areaEl) areaEl.textContent = area.toFixed(2) + ' m²';
+
+    // O-ramka: ichki to'rtburchakni chizish
+    if (sh2.innerPts) {
+        const innerRaw = sh2.innerPts(WZ.dims);
+        const innerPts = innerRaw.map(([x, y]) => [x * sc + ox, y * sc + oy]);
+
+        ctx.beginPath();
+        innerPts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
+        ctx.closePath();
+        ctx.strokeStyle = '#22c55e';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5, 4]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        innerPts.forEach(([x, y]) => {
+            ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2);
+            ctx.fillStyle = '#22c55e'; ctx.fill();
+        });
+    }
 }
 
 function wzCalcArea(pts) {
@@ -734,10 +719,9 @@ async function wzLoadColors() {
    Step 5 — Xulosa
    ══════════════════════════════════════════════ */
 function wzInitSummary() {
-    // State.shapes ga sinxronlash
     wzSyncToState();
 
-    const area = calcA();
+    const area = wzGetArea();
     const sh = SHAPES.find(s => s.id === WZ.shape);
     const roofNames = { shed: 'Bir tomonli', gable: 'Ikki tomonli', doppili: "Do'ppili" };
 
@@ -811,11 +795,25 @@ function wzDrawSummaryPreview() {
     ctx.strokeStyle = '#22c55e';
     ctx.lineWidth = 2;
     ctx.stroke();
+
+    // O-ramka ichki to'rtburchak
+    if (sh.innerPts) {
+        const innerRaw = sh.innerPts(WZ.dims);
+        const innerPts = innerRaw.map(([x,y]) => [x * sc + ox, y * sc + oy]);
+        ctx.beginPath();
+        innerPts.forEach(([x,y], i) => i ? ctx.lineTo(x,y) : ctx.moveTo(x,y));
+        ctx.closePath();
+        ctx.setLineDash([4, 3]);
+        ctx.strokeStyle = '#22c55e';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.setLineDash([]);
+    }
 }
 
 /* ── State.shapes ga sinxronlash ── */
 function wzSyncToState() {
-    if (WZ.customDraw) return; // Murakkab chizishda shapes allaqachon bor
+    if (WZ.customDraw) return;
 
     const sh = SHAPES.find(s => s.id === WZ.shape);
     if (!sh || sh.isCustom) return;
@@ -833,28 +831,165 @@ function wzSyncToState() {
         lens: calcSegLens(canvasPts, segs),
         closed: true,
     }];
+
+    // O-ramka: ichki to'rtburchak — faqat vizual, yuzaga kiritilmaydi
+    if (sh.innerPts) {
+        const innerRaw = sh.innerPts(WZ.dims);
+        const innerCanvasPts = innerRaw.map(([x, y]) => ({ x: x * G, y: y * G }));
+        const innerSegs = defaultSegs(innerCanvasPts.length);
+        State.shapes.push({
+            pts: innerCanvasPts,
+            segs: innerSegs,
+            lens: calcSegLens(innerCanvasPts, innerSegs),
+            closed: true,
+            noArea: true,
+        });
+    }
+
     State.sel = 0;
     State.dirty = true;
+}
+
+/* ── Wizard yuzasini to'g'ri hisoblash ── */
+function wzGetArea() {
+    if (WZ.customDraw) return calcA(); // Canvas'da chizilgan shakllar
+
+    const sh = SHAPES.find(s => s.id === WZ.shape);
+    if (!sh || sh.isCustom) return 0;
+    sh.fields.forEach(f => { if (WZ.dims[f.key] == null) WZ.dims[f.key] = f.def; });
+
+    if (sh.area) return sh.area(WZ.dims); // O-ramka maxsus yuza
+
+    const raw = sh.pts(WZ.dims);
+    return raw && raw.length >= 3 ? wzCalcArea(raw) : 0;
 }
 
 /* ── Murakkab chizma — canvas'ga o'tish ── */
 function wzSwitchToCanvas() {
     document.getElementById('wz-wrap').style.display = 'none';
-    document.getElementById('canvas-mode').style.display = '';
+    document.getElementById('canvas-mode').style.display = 'flex';
 
-    requestAnimationFrame(() => { initCv(); redraw(); });
+    requestAnimationFrame(() => {
+        initCv();
+        redraw();
+    });
     hap('impactMedium');
+}
+
+/* ── Canvas tutorial overlay ── */
+/* ── Canvas tutorial — step-by-step ── */
+
+const TUT_STEPS = [
+    { msg: "Ekranga bosib birinchi nuqtani qo'ying", cursor: [70, 60] }, /*70*/
+    { msg: "Ikkinchi nuqtani qo'ying — chiziq chiziladi", cursor: [230, 60] },
+    { msg: "Uchinchi nuqta — shakl davom etadi", cursor: [230, 180] },
+    { msg: "To'rtinchi nuqtani qo'ying", cursor: [70, 180] },
+    { msg: "Birinchi nuqtaga bosing — shakl yopiladi", cursor: [70, 60] },
+    { msg: "Egri chiziq kerak bo'lsa o'rta nuqtani tortib chiziqni egri qiling", cursor: [150, 28] },
+];
+
+let _tutStep = 0;
+
+function showCanvasTut() {
+    // Oldingi tutorialni tozalash
+    const old = document.getElementById('cv-tut');
+    if (old) old.remove();
+
+    const tpl = document.getElementById('cv-tut-tpl');
+    const wrap = document.getElementById('cwrap');
+    if (!tpl || !wrap) return;
+
+    const clone = tpl.content.cloneNode(true);
+    wrap.appendChild(clone);
+
+    _tutStep = 0;
+    tutGoTo(0);
+}
+
+function tutGoTo(step) {
+    _tutStep = step;
+    const total = TUT_STEPS.length;
+    const s = TUT_STEPS[step];
+    if (!s) { closeTut(); return; }
+
+    const root = document.getElementById('cv-tut');
+    if (!root) return;
+
+    // Elementlarni step bo'yicha ko'rsatish/yashirish
+    root.querySelectorAll('.tut-el').forEach(el => {
+        const elStep = parseInt(el.getAttribute('data-s'));
+        if (elStep <= step + 1) {
+            if (!el.classList.contains('vis')) el.classList.add('vis');
+        } else {
+            el.classList.remove('vis');
+        }
+    });
+
+    // Kursor
+    const cur = document.getElementById('tut-cursor');
+    if (cur) {
+        cur.classList.add('vis');
+        cur.style.transform = 'translate(' + s.cursor[0] + 'px,' + s.cursor[1] + 'px)';
+        cur.classList.remove('tap');
+        void cur.offsetWidth;
+        cur.style.setProperty('--pos', 'translate(' + s.cursor[0] + 'px,' + s.cursor[1] + 'px)');
+        cur.classList.add('tap');
+    }
+
+    // Matn va counter
+    const msg = document.getElementById('tut-msg');
+    if (msg) msg.textContent = s.msg;
+    const counter = document.getElementById('tut-counter');
+    if (counter) counter.textContent = (step + 1) + ' / ' + total;
+
+    // Orqaga tugma
+    const prevBtn = document.getElementById('tut-prev-btn');
+    if (prevBtn) prevBtn.style.display = step === 0 ? 'none' : '';
+
+    // Keyingi tugma
+    const btn = document.getElementById('tut-next-btn');
+    if (btn) {
+        if (step >= total - 1) {
+            btn.innerHTML = 'Tayyor <svg width="16" height="16" viewBox="0 0 24 24" fill="none">' +
+                '<path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        } else {
+            btn.innerHTML = 'Keyingi <svg width="16" height="16" viewBox="0 0 24 24" fill="none">' +
+                '<path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        }
+    }
+}
+
+function tutNext() {
+    if (_tutStep >= TUT_STEPS.length - 1) {
+        closeTut();
+    } else {
+        tutGoTo(_tutStep + 1);
+    }
+}
+
+function tutPrev() {
+    if (_tutStep > 0) {
+        tutGoTo(_tutStep - 1);
+    }
+}
+
+function closeTut() {
+    const el = document.getElementById('cv-tut');
+    if (!el) return;
+
+    el.style.transition = 'opacity .3s';
+    el.style.opacity = '0';
+    setTimeout(() => el.remove(), 300);
 }
 
 /* ── Canvas'dan wizard'ga qaytish ── */
 function wzBackFromCanvas() {
     document.getElementById('canvas-mode').style.display = 'none';
-    document.getElementById('wz-wrap').style.display = '';
+    document.getElementById('wz-wrap').style.display = 'flex';
 
-    // Agar shapes chizilgan bo'lsa, to'g'ridan-to'g'ri step 2 (Tom) ga o'tish
     if (State.shapes.length > 0) {
         WZ.customDraw = true;
-        wzGoTo(2);
+        wzGoTo(2); // Tom turini tanlashga o'tish
     } else {
         wzGoTo(0);
     }
@@ -865,7 +1000,46 @@ function wzBackFromCanvas() {
    ══════════════════════════════════════════════ */
 function wzCalculate() {
     wzSyncToState();
-    sendCalc(); // calc.js dagi funksiya
+    const area = wzGetArea();
+
+    const btn = document.querySelector('.wz-calc-btn');
+    if (!btn) return;
+
+    const origHTML = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML =
+        '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="spin">' +
+        '<circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5" ' +
+        'stroke-dasharray="28" stroke-dashoffset="8" fill="none"/></svg> Hisoblanmoqda...';
+
+    fetch(`${API_BASE}/roof/calculate/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            area: area,
+            country: cfg.country,
+            thickness: cfg.thick,
+            type: cfg.type,
+            roof: cfg.roof,
+            color: cfg.color
+        })
+    })
+    .then(r => {
+        if (!r.ok) throw new Error('Server xato');
+        return r.json();
+    })
+    .then(data => {
+        showResult(data);
+        hap('notificationSuccess');
+    })
+    .catch(e => {
+        console.warn('Hisoblash xato:', e.message);
+        hap('notificationWarning');
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = origHTML;
+    });
 }
 
 /* ── DOM render ── */
