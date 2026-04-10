@@ -14,7 +14,7 @@ const THEME_COLORS = {
 function getPreferredTheme() {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) return saved;
-    return 'light'; // Default: dark
+    return 'dark'; // Default: dark
 }
 
 /** Theme ni qo'llash */
