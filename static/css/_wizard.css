@@ -313,7 +313,7 @@
 }
 
 /* Preview */
-.wz-preview {
+/*.wz-preview {
     border-radius: 14px;
     border: 1.5px solid var(--brd2);
     background: var(--bg2);
@@ -321,7 +321,29 @@
     position: relative;
     height: 200px;
 }
-.wz-preview canvas { width: 100%; height: 100%; display: block; }
+.wz-preview canvas { width: 100%; height: 100%; display: block; }*/
+
+.wz-preview {
+    border-radius: 14px;
+    border: 1.5px solid var(--brd2);
+    background: var(--bg2);
+    overflow: hidden;
+    position: relative;
+    /* height: 200px; o'rniga: */
+    width: 100%;
+    min-height: 240px;
+    display: flex; /* Canvas o'lchamini aniq ushlash uchun */
+}
+
+.wz-preview canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+}
+
 .wz-area-badge {
     position: absolute;
     top: 10px;
@@ -392,7 +414,7 @@
 .wz-roof-card span { font-size: 11px; font-weight: 600; }
 
 /* Pitch slider */
-.wz-pitch { margin-top: 8px; }
+/*.wz-pitch { margin-top: 8px; }
 .wz-pitch-label {
     display: flex;
     justify-content: space-between;
@@ -400,7 +422,7 @@
 }
 .wz-pitch-label span:first-child { font-size: 12px; color: var(--t3); font-weight: 600; }
 .wz-pitch-label span:last-child { font-size: 13px; color: var(--g); font-weight: 600; font-family: 'JetBrains Mono', monospace; }
-
+*/
 .wz-range-wrap {
     position: relative;
     height: 6px;
@@ -640,6 +662,7 @@
    Mobile
    ══════════════════════════════════════════════ */
 @media (max-width: 700px) {
+    .canvas-mode {width: 100%; height: 100%;}
     .wz-shapes { grid-template-columns: repeat(2, 1fr); gap: 6px; }
     .wz-sh { padding: 8px 4px 6px; }
     .wz-sh svg { width: 30px; height: 30px; }

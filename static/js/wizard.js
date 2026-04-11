@@ -1,3 +1,4 @@
+//wz-edit-wrap
 /* ══════════════════════════════════════════════
    wizard.js — Step-by-step hisoblash wizard
 
@@ -184,7 +185,7 @@ const SHAPES = [
         isCustom: true,
     },
 ];
-
+//wz-dim-inputs
 /* ══════════════════════════════════════════════
    Wizard boshqaruvi
    ══════════════════════════════════════════════ */
@@ -875,6 +876,8 @@ function wzSwitchToCanvas() {
     });
     hap('impactMedium');
 }
+
+
 
 /* ── Canvas tutorial overlay ── */
 /* ── Canvas tutorial — step-by-step ── */
