@@ -12,8 +12,6 @@
    5 — Xulosa + Hisoblash
    ══════════════════════════════════════════════ */
 
-console.log("wizard loaded");
-
 window.WZ = {
     step: 0,
     total: 6,
@@ -201,9 +199,6 @@ function wzGoTo(n) {
     const body = document.getElementById('wz-s' + n);
     if (body) body.classList.add('vis');
 
-    // Progress bar
-    wzUpdateProgress();
-
     // Step header
     wzUpdateHeader();
 
@@ -238,19 +233,6 @@ function wzNext() {
 
 function wzPrev() {
     if (WZ.step > 0) wzGoTo(WZ.step - 1);
-}
-
-/* ── Progress bar ── */
-function wzUpdateProgress() {
-    const pct = ((WZ.step + 1) / WZ.total * 100).toFixed(0);
-    const bar = document.getElementById('wz-prog-bar');
-    if (bar) bar.style.width = pct + '%';
-
-    // Step indikatorlar
-    document.querySelectorAll('.wz-dot').forEach((dot, i) => {
-        dot.classList.toggle('done', i < WZ.step);
-        dot.classList.toggle('on', i === WZ.step);
-    });
 }
 
 /* ── Header ── */
@@ -884,8 +866,6 @@ function wzSwitchToCanvas() {
     ro.observe(document.getElementById('cwrap'));
     hap('impactMedium');
 }
-
-
 
 /* ── Canvas tutorial overlay ── */
 /* ── Canvas tutorial — step-by-step ── */

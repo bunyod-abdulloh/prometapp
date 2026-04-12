@@ -613,33 +613,7 @@
    Canvas mode (murakkab chizma)
    ══════════════════════════════════════════════ */
 /* Canvas mode */
-.canvas-mode {
-    display: none;
-    flex-direction: column;
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-    height: 100%;        /* ← qo'shing */
-}
 
-.canvas-mode .calc {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr; /* ← cv-col stretch bo'ladi */
-    height: 100%;            /* ← qo'shing */
-    min-height: 0;
-}
-
-.canvas-mode .cv-col {
-    border-right: none;
-    height: 100%;            /* ← qo'shing */
-    min-height: 0;
-}
-
-.canvas-mode .cvw {
-    flex: 1;
-    min-height: 0;
-    height: 100%;            /* ← height: 100% canvas uchun ishlaydi */
-}
 .wz-canvas-back {
     flex-shrink: 0;
     display: flex;
@@ -681,15 +655,54 @@
 }
 .wz-canvas-done:hover { background: var(--g2); }
 
-/* ══════════════════════════════════════════════
-   Mobile
-   ══════════════════════════════════════════════ */
+/* ── Canvas mode: to'liq balandlik zanjiri ── */
+.canvas-mode {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+/* .calc grid emas, flex bo'lishi kerak canvas mode'da */
+.canvas-mode .calc {
+    display: flex;
+    flex-direction: column;
+    flex: 1;          /* ← qolgan bo'sh joyni to'ldiradi */
+    min-height: 0;
+    height: 100%;
+}
+
+.canvas-mode .cv-col {
+    display: flex;
+    flex-direction: column;
+    flex: 1;          /* ← bu ham flex: 1 bo'lishi kerak */
+    min-height: 0;
+    border-right: none;
+}
+
+.canvas-mode .cvw {
+    flex: 1;
+    min-height: 0;
+    position: relative; /* cv-area, cv-z uchun */
+}
+
+/* Canvas o'zi — JS initCv() to'g'ri o'lcham oladi */
+#cv {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* ── Media queries — faqat grid/columns uchun ── */
 @media (max-width: 700px) {
-    .canvas-mode {width: 100%; height: 100%;}
     #cv {
-        width: 100% !important;
-        height: 100% !important;
-    }
+        border: 5px solid red;
+        width: 100%;
+        height: 100%;
+        }
     .wz-shapes { grid-template-columns: repeat(2, 1fr); gap: 6px; }
     .wz-sh { padding: 8px 4px 6px; }
     .wz-sh svg { width: 30px; height: 30px; }
@@ -700,9 +713,8 @@
     .wz-dot-circle { width: 20px; height: 20px; font-size: 9px; }
 
     .wz-body { padding: 12px; }
-    .wz-preview { width: 100%; height: 100%; }
+    .wz-preview { width: 100%; aspect-ratio: 16 / 9; }
     .wz-roof-grid { gap: 6px; }
-
     .wz-color-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
