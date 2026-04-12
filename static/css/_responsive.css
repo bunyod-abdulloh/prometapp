@@ -21,7 +21,11 @@
     .calc.collapsed .cv-col { flex: 1 }
     .calc.collapsed .cvw { height: auto; min-height: 0; max-height: none; flex: 1 }
     .cv-col { flex-shrink: 0 }
-    .cvw { height: 34dvh; min-height: 200px; max-height: 340px; flex: none }
+    .cvw {
+        height: calc(42 * var(--vh, 1vh)); /* dvh o'rniga */
+        min-height: 240px;
+        flex: none;
+    }
 
     /* ✅ Canvas mode uchun override — responsive stillarni bekor qiladi */
     .canvas-mode .cv-col {

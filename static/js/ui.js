@@ -1,6 +1,19 @@
 /* ══════════════════════════════════════════════
    ui.js — Navigatsiya, panellar, DOM yangilash
    ══════════════════════════════════════════════ */
+/* ── Real viewport height — Telegram WebView va mobile browser fix ── */
+function setRealVH() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+setRealVH();
+window.addEventListener('resize', setRealVH);
+
+// Telegram WebApp ichida ochilsa — viewport o'zgarganda qayta hisoblash
+if (window.Telegram?.WebApp) {
+    window.Telegram.WebApp.onEvent('viewportChanged', setRealVH);
+}
 
 /* ── Sahifa navigatsiyasi ── */
 function goP(p) {
@@ -23,13 +36,6 @@ function setRoof(r) {
     document.querySelectorAll('.rf').forEach(b => b.classList.toggle('on', b.dataset.r === r));
     upC();
     hap('impactLight');
-}
-
-function setPitch(v) {
-    cfg.pitch = parseFloat(v);
-    document.getElementById('pv').textContent = parseFloat(v).toFixed(1) + ' m';
-    document.getElementById('pf').style.width = ((v - 0.5) / 5.5 * 100) + '%';
-    upC();
 }
 
 /* ── Chizish rejimi boshqaruvi ── */
