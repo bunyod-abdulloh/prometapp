@@ -35,8 +35,8 @@ function initCv() {
     const dpr = devicePixelRatio || 1;
     cv.width  = Math.max(1, Math.floor(w.clientWidth * dpr));
     cv.height = Math.max(1, Math.floor(w.clientHeight * dpr));
-    cv.style.width  = w.clientWidth + 'px';
-    cv.style.height = w.clientHeight + 'px';
+//    cv.style.width  = w.clientWidth + 'px';
+//    cv.style.height = w.clientHeight + 'px';
     cx.scale(dpr, dpr);
 }
 

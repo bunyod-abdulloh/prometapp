@@ -1,4 +1,5 @@
 //wz-edit-wrap
+// canvas.style
 /* ══════════════════════════════════════════════
    wizard.js — Step-by-step hisoblash wizard
 
@@ -866,7 +867,7 @@ function wzGetArea() {
 }
 
 /* ── Murakkab chizma — canvas'ga o'tish ── */
-function wzSwitchToCanvas() {
+/*function wzSwitchToCanvas() {
     document.getElementById('wz-wrap').style.display = 'none';
     document.getElementById('canvas-mode').style.display = 'flex';
 
@@ -874,6 +875,24 @@ function wzSwitchToCanvas() {
         initCv();
         redraw();
     });
+    hap('impactMedium');
+}
+*/
+function wzSwitchToCanvas() {
+    document.getElementById('wz-wrap').style.display = 'none';
+    document.getElementById('canvas-mode').style.display = 'flex';
+
+    // cwrap haqiqiy o'lchamga yetguncha kutadi, keyin initCv chaqiradi
+    const ro = new ResizeObserver((entries) => {
+        const h = entries[0].contentRect.height;
+        if (h > 100) {          // minimal balandlik tekshiruvi
+            ro.disconnect();    // bir marta ishlasa yetarli
+            initCv();
+            redraw();
+        }
+    });
+
+    ro.observe(document.getElementById('cwrap'));
     hap('impactMedium');
 }
 
