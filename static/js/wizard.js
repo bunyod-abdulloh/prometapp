@@ -1,5 +1,5 @@
 //wz-edit-wrap
-// canvas.style
+//wzBackFromCanvas
 /* ══════════════════════════════════════════════
    wizard.js — Step-by-step hisoblash wizard
 
@@ -850,20 +850,30 @@ function wzGetArea() {
 
 /* ── Murakkab chizma — canvas'ga o'tish ── */
 function wzSwitchToCanvas() {
+    const canvasMode = document.getElementById('canvas-mode');
     document.getElementById('wz-wrap').style.display = 'none';
-    document.getElementById('canvas-mode').style.display = 'flex';
+    canvasMode.style.display = 'flex';
 
-    // cwrap haqiqiy o'lchamga yetguncha kutadi, keyin initCv chaqiradi
-    const ro = new ResizeObserver((entries) => {
-        const h = entries[0].contentRect.height;
-        if (h > 100) {          // minimal balandlik tekshiruvi
-            ro.disconnect();    // bir marta ishlasa yetarli
-            initCv();
-            redraw();
+    function fitCanvas() {
+        const totalH = window.visualViewport?.height || window.innerHeight;
+        const header   = document.querySelector('.hdr')?.offsetHeight || 0;
+        const backBar  = document.querySelector('.wz-canvas-back')?.offsetHeight || 0;
+        const toolbar  = document.querySelector('.cv-tb')?.offsetHeight || 0;
+
+        // Qolgan bo'sh joy — cwrap'ga to'g'ridan-to'g'ri beramiz
+        const cwrap = document.getElementById('cwrap');
+        if (cwrap) {
+            cwrap.style.height = (totalH - header - backBar - toolbar) + 'px';
         }
-    });
 
-    ro.observe(document.getElementById('cwrap'));
+        initCv();
+        redraw();
+    }
+    requestAnimationFrame(() => requestAnimationFrame(fitCanvas));
+
+    // Keyboard ochilsa yoki viewport o'zgarsa — qayta hisoblash
+    window.visualViewport?.addEventListener('resize', fitCanvas);
+
     hap('impactMedium');
 }
 
@@ -978,14 +988,18 @@ function wzBackFromCanvas() {
     document.getElementById('canvas-mode').style.display = 'none';
     document.getElementById('wz-wrap').style.display = 'flex';
 
+    // ← fitCanvas reference saqlanmagan, shuning uchun listener
+    // avtomatik yo'qolmaydi. Yechim: named function ishlatish
+    const cwrap = document.getElementById('cwrap');
+    if (cwrap) cwrap.style.height = ''; // inline style'ni tozalash
+
     if (State.shapes.length > 0) {
         WZ.customDraw = true;
-        wzGoTo(2); // Tom turini tanlashga o'tish
+        wzGoTo(2);
     } else {
         wzGoTo(0);
     }
 }
-
 /* ══════════════════════════════════════════════
    Hisoblash — sendCalc ni qayta ishlatish
    ══════════════════════════════════════════════ */
