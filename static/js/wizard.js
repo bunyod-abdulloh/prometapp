@@ -867,17 +867,6 @@ function wzGetArea() {
 }
 
 /* ── Murakkab chizma — canvas'ga o'tish ── */
-/*function wzSwitchToCanvas() {
-    document.getElementById('wz-wrap').style.display = 'none';
-    document.getElementById('canvas-mode').style.display = 'flex';
-
-    requestAnimationFrame(() => {
-        initCv();
-        redraw();
-    });
-    hap('impactMedium');
-}
-*/
 function wzSwitchToCanvas() {
     document.getElementById('wz-wrap').style.display = 'none';
     document.getElementById('canvas-mode').style.display = 'flex';
