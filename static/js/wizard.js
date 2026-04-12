@@ -856,23 +856,27 @@ function wzSwitchToCanvas() {
     document.getElementById('canvas-mode').style.display = 'flex';
 
     _fitCanvas = function() {
-        const totalH = window.visualViewport?.height || window.innerHeight;
-        const header  = document.querySelector('.hdr')?.offsetHeight || 0;
-        const backBar = document.querySelector('.wz-canvas-back')?.offsetHeight || 0;
-        const toolbar = document.querySelector('.cv-tb')?.offsetHeight || 0;
+        const pg     = document.getElementById('pg-calc');
+        const back   = document.querySelector('.wz-canvas-back');
+        const tb     = document.querySelector('.cv-tb');
+        const cwrap  = document.getElementById('cwrap');
 
-        const cwrap = document.getElementById('cwrap');
-        if (cwrap) {
-            cwrap.style.height = (totalH - header - backBar - toolbar) + 'px';
+        if (!pg || !cwrap) return;
+
+        // window emas — pg-calc ning haqiqiy o'lchangan balandligi
+        // Telegram bottom bar, browser chrome — bularni pg-calc allaqachon hisobga olgan
+        const availH = pg.clientHeight
+            - (back?.offsetHeight || 0)
+            - (tb?.offsetHeight   || 0);
+
+        if (availH > 50) {
+            cwrap.style.height = availH + 'px';
+            initCv();
+            redraw();
         }
-
-        initCv();
-        redraw();
     };
 
     requestAnimationFrame(() => requestAnimationFrame(_fitCanvas));
-
-    // Endi reference bor — keyinchalik remove qila olamiz
     window.visualViewport?.addEventListener('resize', _fitCanvas);
     hap('impactMedium');
 }
@@ -988,7 +992,6 @@ function wzBackFromCanvas() {
     document.getElementById('canvas-mode').style.display = 'none';
     document.getElementById('wz-wrap').style.display = 'flex';
 
-    // ✅ Listener'ni to'g'ri o'chiramiz
     if (_fitCanvas) {
         window.visualViewport?.removeEventListener('resize', _fitCanvas);
         _fitCanvas = null;
