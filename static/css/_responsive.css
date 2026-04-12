@@ -23,7 +23,7 @@
     .cv-col { flex-shrink: 0 }
     .cvw {
         height: calc(42 * var(--vh, 1vh)); /* dvh o'rniga */
-        min-height: 240px;
+        min-height: 500px;
         flex: none;
     }
 
