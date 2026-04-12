@@ -849,18 +849,18 @@ function wzGetArea() {
 }
 
 /* ── Murakkab chizma — canvas'ga o'tish ── */
+let _fitCanvas = null;
+
 function wzSwitchToCanvas() {
-    const canvasMode = document.getElementById('canvas-mode');
     document.getElementById('wz-wrap').style.display = 'none';
-    canvasMode.style.display = 'flex';
+    document.getElementById('canvas-mode').style.display = 'flex';
 
-    function fitCanvas() {
+    _fitCanvas = function() {
         const totalH = window.visualViewport?.height || window.innerHeight;
-        const header   = document.querySelector('.hdr')?.offsetHeight || 0;
-        const backBar  = document.querySelector('.wz-canvas-back')?.offsetHeight || 0;
-        const toolbar  = document.querySelector('.cv-tb')?.offsetHeight || 0;
+        const header  = document.querySelector('.hdr')?.offsetHeight || 0;
+        const backBar = document.querySelector('.wz-canvas-back')?.offsetHeight || 0;
+        const toolbar = document.querySelector('.cv-tb')?.offsetHeight || 0;
 
-        // Qolgan bo'sh joy — cwrap'ga to'g'ridan-to'g'ri beramiz
         const cwrap = document.getElementById('cwrap');
         if (cwrap) {
             cwrap.style.height = (totalH - header - backBar - toolbar) + 'px';
@@ -868,12 +868,12 @@ function wzSwitchToCanvas() {
 
         initCv();
         redraw();
-    }
-    requestAnimationFrame(() => requestAnimationFrame(fitCanvas));
+    };
 
-    // Keyboard ochilsa yoki viewport o'zgarsa — qayta hisoblash
-    window.visualViewport?.addEventListener('resize', fitCanvas);
+    requestAnimationFrame(() => requestAnimationFrame(_fitCanvas));
 
+    // Endi reference bor — keyinchalik remove qila olamiz
+    window.visualViewport?.addEventListener('resize', _fitCanvas);
     hap('impactMedium');
 }
 
@@ -988,10 +988,14 @@ function wzBackFromCanvas() {
     document.getElementById('canvas-mode').style.display = 'none';
     document.getElementById('wz-wrap').style.display = 'flex';
 
-    // ← fitCanvas reference saqlanmagan, shuning uchun listener
-    // avtomatik yo'qolmaydi. Yechim: named function ishlatish
+    // ✅ Listener'ni to'g'ri o'chiramiz
+    if (_fitCanvas) {
+        window.visualViewport?.removeEventListener('resize', _fitCanvas);
+        _fitCanvas = null;
+    }
+
     const cwrap = document.getElementById('cwrap');
-    if (cwrap) cwrap.style.height = ''; // inline style'ni tozalash
+    if (cwrap) cwrap.style.height = '';
 
     if (State.shapes.length > 0) {
         WZ.customDraw = true;
