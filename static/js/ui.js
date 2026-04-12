@@ -1,20 +1,28 @@
 /* ══════════════════════════════════════════════
    ui.js — Navigatsiya, panellar, DOM yangilash
    ══════════════════════════════════════════════ */
-/* ── Real viewport height — Telegram WebView va mobile browser fix ── */
+/* ui.js — setRealVH ni shu bilan almashtir */
 function setRealVH() {
-    const vh = window.innerHeight * 0.01;
+    const height = window.visualViewport?.height || window.innerHeight;
+    const vh = height * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
 
 setRealVH();
+
+// visualViewport — keyboard ochilganda ham ishlaydi
+window.visualViewport?.addEventListener('resize', setRealVH);
+window.visualViewport?.addEventListener('scroll', setRealVH);
+
+// Fallback: eski brauzerlar uchun
 window.addEventListener('resize', setRealVH);
 
-// Telegram WebApp ichida ochilsa — viewport o'zgarganda qayta hisoblash
 if (window.Telegram?.WebApp) {
-    window.Telegram.WebApp.onEvent('viewportChanged', setRealVH);
+    window.Telegram.WebApp.onEvent('viewportChanged', function() {
+        var h = (window.visualViewport?.height || window.innerHeight) * 0.01;
+        document.documentElement.style.setProperty('--vh', h + 'px');
+    });
 }
-
 /* ── Sahifa navigatsiyasi ── */
 function goP(p) {
     document.querySelectorAll('.pg').forEach(e => e.classList.remove('on'));

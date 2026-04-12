@@ -22,6 +22,17 @@
             var m = document.getElementById('meta-theme-color');
             if (m) m.content = t === 'light' ? '#f8fafc' : '#080c14';
         })();
+
+        // ← shu yerga qo'shamiz — DOM yuklanmasdan oldin height o'rnatiladi
+        (function() {
+            function setVH() {
+                var h = (window.visualViewport?.height || window.innerHeight) * 0.01;
+                document.documentElement.style.setProperty('--vh', h + 'px');
+            }
+            setVH();
+            window.visualViewport?.addEventListener('resize', setVH);
+            window.addEventListener('resize', setVH);
+        })();
     </script>
 </head>
 <body>
