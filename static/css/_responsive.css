@@ -33,11 +33,10 @@
         flex-shrink: 1;  /* yuqoridagi flex-shrink:0 ni bekor qiladi */
     }
     .canvas-mode .cvw {
-        height: auto;        /* 34dvh o'rniga */
-        min-height: 0;       /* 200px o'rniga */
-        max-height: none;    /* 340px o'rniga */
-        flex: 1;             /* flex:none o'rniga */
-        border: 2px solid green;
+        height: auto;
+        min-height: 0;
+        max-height: none;
+        flex: 1;
     }
     .rp { flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column }
     .rpn.vis { flex: 1; min-height: 0 }
