@@ -57,10 +57,7 @@ window.addEventListener('load', () => {
 
     upH();
     redraw();
-    alert('shapes: ' + JSON.stringify(State.shapes.length));
-    alert('bounds: ' + JSON.stringify(getShapesBounds()));
     fitToScreen();
-    alert('V: s=' + V.s + ' tx=' + V.tx + ' ty=' + V.ty);
 });
 
 /* ── Oyna o'lchami o'zgarganda ── */

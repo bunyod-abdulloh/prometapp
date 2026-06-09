@@ -377,6 +377,8 @@ function wzInitDims() {
     }
 
     wzDrawPreview();
+    wzSyncToState();
+    fitToScreen();
 }
 
 /* ── Template shaklni canvas'da tahrirlash ── */
@@ -387,6 +389,7 @@ function wzEditInCanvas() {
     State.sel = 0;
     State.dirty = true;
     redraw();
+    fitToScreen();
 }
 
 function wzDimChange(inp) {
@@ -873,6 +876,7 @@ function wzSwitchToCanvas() {
             cwrap.style.height = availH + 'px';
             initCv();
             redraw();
+            fitToScreen();
         }
     };
 
