@@ -1,20 +1,20 @@
-{# pages/calc.html — Wizard asosidagi kalkulyator #}
+
 <div class="pg on" id="pg-calc" style="overflow:hidden">
-    {# ═══ WIZARD MODE ═══ #}
+
     <div class="wz-wrap" id="wz-wrap">
 
-        {# Step header #}
+
         <div class="wz-header-wrap">
             <div class="wz-header" id="wz-header"></div>
             <div class="wz-hint" id="wz-hint"></div>
         </div>
 
-        {# ═══ Step 0 — Shakl tanlash ═══ #}
+
         <div class="wz-body vis" id="wz-s0">
             <div class="wz-shapes" id="wz-shapes"></div>
         </div>
 
-        {# ═══ Step 1 — O'lchamlar ═══ #}
+
         <div class="wz-body" id="wz-s1">
             <div class="wz-dim-inputs" id="wz-dim-inputs"></div>
             <div class="wz-preview">
@@ -24,7 +24,7 @@
             <div id="wz-edit-wrap"></div>
         </div>
 
-        {# ═══ Step 2 — Tom turi ═══ #}
+
         <div class="wz-body" id="wz-s2">
             <div class="wz-roof-grid">
                 <button class="wz-roof-card rf" data-r="shed" onclick="wzSetRoof('shed')">
@@ -57,7 +57,7 @@
             </div>
         </div>
 
-        {# ═══ Step 3 — Profnastil ═══ #}
+
         <div class="wz-body" id="wz-s3">
             <div class="wz-prof-section">
                 <div class="wz-prof-label">Ishlab chiqaruvchi davlat</div>
@@ -73,12 +73,12 @@
             </div>
         </div>
 
-        {# ═══ Step 4 — Rang ═══ #}
+
         <div class="wz-body" id="wz-s4">
             <div class="wz-color-grid" id="wz-colors"></div>
         </div>
 
-        {# ═══ Step 5 — Xulosa ═══ #}
+
         <div class="wz-body" id="wz-s5">
 
             <div class="wz-summary" id="wz-summary"></div>
@@ -91,7 +91,7 @@
             </button>
         </div>
 
-        {# Navigation #}
+
         <div class="wz-nav">
             <button class="wz-btn wz-btn-prev" id="wz-prev" onclick="wzPrev()" style="display:none">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -118,7 +118,7 @@
         </div>
     </div>
 
-    {# ═══ CANVAS MODE (murakkab chizma uchun) ═══ #}
+
     <div class="canvas-mode" id="canvas-mode">
         <div class="wz-canvas-back">
             <button class="wz-back-btn" onclick="wzBackFromCanvas()">
@@ -153,7 +153,6 @@
         </div>
     </div>
 
-    {# Result (res bar va modal) #}
     {% include 'includes/_calc_result.html' %}
     {% include 'includes/_calc_result_modal.html' %}
 

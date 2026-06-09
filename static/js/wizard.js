@@ -11,7 +11,7 @@
    4 — Rang
    5 — Xulosa + Hisoblash
    ══════════════════════════════════════════════ */
-
+wzLoadColors
 window.WZ = {
     step: 0,
     total: 6,
@@ -684,7 +684,7 @@ async function wzLoadColors() {
         div.dataset.slug = c.slug;
 
         if (c.image) {
-            div.innerHTML = '<img src="' + c.image + '" alt="' + c.name + '"><span>' + c.name + '</span>';
+            div.innerHTML = '<div class="img-wrap"><img src="' + c.image + '" alt="' + c.name + '"></div><span>' + c.name + '</span>';
         } else {
             div.innerHTML = '<div class="wz-color-swatch" style="background:' + (c.hex || '#888') + '"></div>' +
                 '<span>' + c.name + '</span>';
