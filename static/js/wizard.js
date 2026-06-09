@@ -11,7 +11,7 @@
    4 — Rang
    5 — Xulosa + Hisoblash
    ══════════════════════════════════════════════ */
-wzLoadColors
+
 window.WZ = {
     step: 0,
     total: 6,
@@ -663,7 +663,7 @@ function wzInitColor() {
 async function wzLoadColors() {
     const grid = document.getElementById('wz-colors');
     if (!grid) return;
-    if (grid.children.length > 1) return; // Allaqachon yuklangan
+    if (grid.children.length > 1) return;
 
     grid.innerHTML = '<span class="wz-loading">Yuklanmoqda...</span>';
 
@@ -673,25 +673,27 @@ async function wzLoadColors() {
         if (!res.ok) throw new Error();
         colors = await res.json();
     } catch {
-        // Fallback: RAL ranglar
         colors = RAL.map(r => ({ slug: r.c, name: r.n, hex: r.h }));
     }
 
     grid.innerHTML = '';
     colors.forEach((c, i) => {
         const div = document.createElement('button');
-        div.className = 'wz-color' + (i === 0 ? ' on' : '');
+        div.className = 'prod-card' + (i === 0 ? ' on' : '');  // ← wz-color → prod-card
         div.dataset.slug = c.slug;
 
         if (c.image) {
-            div.innerHTML = '<div class="img-wrap"><img src="' + c.image + '" alt="' + c.name + '"></div><span>' + c.name + '</span>';
+            div.innerHTML =
+                '<div class="img-wrap"><img src="' + c.image + '" alt="' + c.name + '"></div>' +
+                '<span>' + c.name + '</span>';
         } else {
-            div.innerHTML = '<div class="wz-color-swatch" style="background:' + (c.hex || '#888') + '"></div>' +
+            div.innerHTML =
+                '<div class="wz-color-swatch" style="background:' + (c.hex || '#888') + '"></div>' +
                 '<span>' + c.name + '</span>';
         }
 
         div.addEventListener('click', () => {
-            grid.querySelectorAll('.wz-color').forEach(b => b.classList.remove('on'));
+            grid.querySelectorAll('.prod-card').forEach(b => b.classList.remove('on'));  // ← wz-color → prod-card
             div.classList.add('on');
             cfg.color = c.slug;
             hap('impactLight');
