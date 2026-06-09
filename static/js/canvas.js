@@ -30,6 +30,43 @@ const Drag = {
     origPts: [],        // drag boshidagi original nuqtalar (deep copy)
 };
 
+// Barcha shakllarning bounding box ini hisoblaymiz
+function getShapesBounds() {
+    const allPts = State.shapes.flatMap(sh => sh.pts);
+    if (!allPts.length) return null;
+
+    return {
+        minX: Math.min(...allPts.map(p => p.x)),
+        maxX: Math.max(...allPts.map(p => p.x)),
+        minY: Math.min(...allPts.map(p => p.y)),
+        maxY: Math.max(...allPts.map(p => p.y)),
+    };
+}
+
+// Shakllarni ekranga fit qilib zoom + pan ni sozlaymiz
+function fitToScreen(padding = 60) {
+    const dpr = devicePixelRatio || 1;
+    const cw = cv.width / dpr;
+    const ch = cv.height / dpr;
+
+    const b = getShapesBounds();
+    if (!b) { resetView(); return; }
+
+    const shapeW = b.maxX - b.minX || G;   // 0 bo'lsa fallback
+    const shapeH = b.maxY - b.minY || G;
+
+    // Padding hisobga olingan holda scale
+    const scaleX = (cw - padding * 2) / shapeW;
+    const scaleY = (ch - padding * 2) / shapeH;
+    V.s = clamp(Math.min(scaleX, scaleY), V.mn, V.mx);
+
+    // Markazga joylashtirish
+    V.tx = (cw - shapeW * V.s) / 2 - b.minX * V.s;
+    V.ty = (ch - shapeH * V.s) / 2 - b.minY * V.s;
+
+    render();
+}
+
 function initCv() {
     const w = document.getElementById('cwrap');
     const dpr = devicePixelRatio || 1;

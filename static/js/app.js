@@ -57,6 +57,7 @@ window.addEventListener('load', () => {
 
     upH();
     redraw();
+    fitToScreen();
 });
 
 /* ── Oyna o'lchami o'zgarganda ── */
@@ -66,6 +67,7 @@ window.addEventListener('resize', () => {
         if (canvasMode && canvasMode.style.display !== 'none') {
             initCv();
             redraw();
+            fitToScreen();
         }
         if (WZ.step === 1) wzDrawPreview();
         if (WZ.step === 5) wzDrawSummaryPreview();
