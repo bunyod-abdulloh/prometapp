@@ -11,7 +11,9 @@
                      data-idx="{{ forloop.counter0 }}"
                      data-slug="{{ color.slug }}"
                      onclick="pickProd({{ forloop.counter0 }})">
-                    <img src="{{ color.image.url }}" alt="{{ color.name }}">
+                    <div class="img-wrap">
+                        <img src="{{ color.image.url }}" alt="{{ color.name }}">
+                    </div>
                     <span>{{ color.name }}</span>
                 </div>
                 {% endfor %}
